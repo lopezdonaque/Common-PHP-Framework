@@ -5,8 +5,6 @@ namespace Common\Middleware\JsonRpc;
 /**
  * Encodes the given JSON-RPC Response object into the HTTP Response body
  *
- * @author Androme Iberica 2011
- * @package common
  */
 class Encoder implements \Common\Middleware\Listener
 {

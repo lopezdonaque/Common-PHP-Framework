@@ -3,11 +3,9 @@
 namespace Common\JsonRpc;
 
 /**
- * When a rpc call encounters an error, the Response Object MUST contain the error
- * member with a value that is a Object with the following members
+ * When a RPC call encounters an error, the Response Object MUST contain the error member with a value that is a Object
+ * with the following members
  *
- * @author  Androme Iberica 2011
- * @package common
  */
 class Error
 {

@@ -1,9 +1,9 @@
 <?php
 
-$androme_libroot = getenv( 'ANDROME_LIBROOT' ) ?: '/usr/local/lib/androme';
+$libroot = getenv( 'LIBROOT' ) ?: '/usr/local/lib';
 
 $paths = array(
-  "$androme_libroot/vendor/Zend/1.11.7",
+  "libroot/vendor/Zend/1.11.7",
   realpath( __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'src')
 );
 

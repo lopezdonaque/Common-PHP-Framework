@@ -5,7 +5,6 @@ namespace Common\Middleware;
 /**
  * Middleware response container.By default it contains placeholders for HTTP\Response and JsonRpc\Response
  *
- * @author Androme Iberica 2011
  */
 class Response
 {

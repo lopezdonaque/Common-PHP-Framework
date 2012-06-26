@@ -6,8 +6,6 @@ namespace Common\JsonRpc;
  * A JSON-RPC request, according to jsonrpc.org/spec.html
  * A "extensions" member is added for additional members of the  request object.
  *
- * @author Androme Iberica 2011
- * @package common
  */
 class Request
 {

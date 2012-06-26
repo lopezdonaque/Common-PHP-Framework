@@ -5,8 +5,6 @@ namespace Common\JsonRpc;
 /**
  * A JSON-RPC response, according to jsonrpc.org/spec.html
  *
- * @author Androme Iberica 2011
- * @package common
  */
 class Response
 {

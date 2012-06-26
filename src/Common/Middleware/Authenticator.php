@@ -6,8 +6,6 @@ namespace Common\Middleware;
 /**
  * Interface to be implemented by request-authentication modules
  *
- * @author Androme Iberica 2011
- * @package common
  */
 interface Authenticator
 {

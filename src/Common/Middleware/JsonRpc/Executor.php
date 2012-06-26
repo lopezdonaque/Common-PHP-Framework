@@ -6,8 +6,6 @@ namespace Common\Middleware\JsonRpc;
 /**
  * A JSON-RPC executor. If passed an object, that will the one used to call its "method" as told by the JsonRpc\Request
  *
- * @author Androme Iberica 2011
- * @package common
  */
 class Executor implements \Common\Middleware\Listener
 {
