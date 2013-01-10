@@ -16,15 +16,16 @@ class Xml
    *
    * @param array $array
    * @param string $start_element
+   * @param string $numeric_index_prefix
    * @return string
    */
-  public static function get_xml_from_mixed_array( $array, $start_element = 'root' )
+  public static function get_xml_from_mixed_array( $array, $start_element = 'root', $numeric_index_prefix = 'item_' )
   {
     $xml = new \XmlWriter();
     $xml->openMemory();
     $xml->startDocument( '1.0', 'UTF-8' );
     $xml->startElement( $start_element );
-    self::_write( $xml, $array );
+    self::_write( $xml, $array, $numeric_index_prefix );
     $xml->endElement();
     return $xml->outputMemory( true );
   }
@@ -36,21 +37,22 @@ class Xml
    *
    * @param \XMLWriter $xml
    * @param mixed $data
+   * @param string $numeric_index_prefix
    */
-  private static function _write( \XMLWriter $xml, $data )
+  private static function _write( \XMLWriter $xml, $data, $numeric_index_prefix )
   {
     foreach( $data as $key => $value )
     {
       // Numeric keys are invalid
       if( is_numeric( $key ) )
       {
-        $key = 'unknownNode_' . (string) $key;
+        $key = $numeric_index_prefix . (string) $key;
       }
 
       if( is_array( $value ) )
       {
         $xml->startElement( $key );
-        self::_write( $xml, $value );
+        self::_write( $xml, $value, $numeric_index_prefix );
         $xml->endElement();
         continue;
       }
@@ -58,12 +60,12 @@ class Xml
       if( is_object( $value ) )
       {
         $xml->startElement( $key );
-        self::_write( $xml, \Common\Utils\Arrays::object_to_array( $value ) );
+        self::_write( $xml, \Common\Utils\Arrays::object_to_array( $value ), $numeric_index_prefix );
         $xml->endElement();
         continue;
       }
 
-      if( ! $value )
+      if( !$value )
       {
         $xml->writeElement( $key, '' );
       }
@@ -82,10 +84,15 @@ class Xml
    * @param string $text
    * @param string $schema
    * @return \SimpleXMLElement
+   * @throws \Exception
    */
   public static function get_and_validate_xml_from_text( $text, $schema )
   {
+    // Trim node value
+    $text = preg_replace( "/> +<\//", "></", $text );
+
     $doc = new \DOMDocument();
+    $dom->preserveWhiteSpace = false;
 
     if( !$doc->loadXML( $text ) )
     {
@@ -93,6 +100,7 @@ class Xml
     }
 
     libxml_use_internal_errors( true );
+
     if( !$doc->schemaValidate( $schema ) )
     {
       $errors = libxml_get_errors();
@@ -102,6 +110,19 @@ class Xml
     }
 
     return simplexml_load_string( $doc->saveXML() );
+  }
+
+
+
+  /**
+   * Compress an XML string
+   *
+   * @param string $xml
+   * @return string
+   */
+  public static function compress_xml( $xml )
+  {
+    return implode( '', array_map( 'trim', explode( "\n", $xml ) ) );
   }
 
 }

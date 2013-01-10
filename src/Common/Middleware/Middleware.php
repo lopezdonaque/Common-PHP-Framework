@@ -1,5 +1,7 @@
 <?php
+
 namespace Common\Middleware;
+
 
 /**
  * Middleware
@@ -30,7 +32,8 @@ class Middleware
    *
    * @var Listener[]
    */
-  private $m_line;
+  private $_line;
+
 
 
   /**
@@ -40,8 +43,9 @@ class Middleware
    */
   public function __construct( $listeners = array() )
   {
-    $this->m_line = $listeners;
+    $this->_line = $listeners;
   }
+
 
 
   /**
@@ -51,8 +55,9 @@ class Middleware
    */
   public function add( Listener $listener )
   {
-    $this->m_line[ ] = $listener;
+    $this->_line[ ] = $listener;
   }
+
 
 
   /**
@@ -79,62 +84,67 @@ class Middleware
         return $item == $bef;
       };
     }
+
     $inserted = false;
-    foreach( $this->m_line as $line_listener )
+
+    foreach( $this->_line as $line_listener )
     {
       if( !$inserted && $comparer( $before, $line_listener ) )
       {
         $res[ ] = $listener;
         $inserted = true;
       }
+
       $res[ ] = $line_listener;
     }
+
     if( !$inserted )
     {
       $res[ ] = $listener;
     }
-    $this->m_line = $res;
+
+    $this->_line = $res;
   }
+
 
 
   /**
    * Insert after a given listener (either by full-scoped class name or by object).
-   * Note that if a string is used, the listener is inserted after the FIRST instance of this kind of listener
+   * Note that if a string is used, the listener is inserted after the FIRST instance of this kind of listener.
    *
    * @param \Common\Middleware\Listener $listener
    * @param string|\Common\Middleware\Listener $after
-   * @return void
    */
   public function insert_after( \Common\Middleware\Listener $listener, $after )
   {
     $res = array();
-
-    /** @var $is_the_same Closure */
-    $is_the_same = $this->get_comparer( $after );
-
+    $is_the_same = $this->get_comparer( $after ); /* @var $is_the_same \Closure */
     $inserted = false;
-    foreach( $this->m_line as $line_listener )
+
+    foreach( $this->_line as $line_listener )
     {
       $res[ ] = $line_listener;
+
       if( !$inserted && $is_the_same( $after, $line_listener ) )
       {
         $res[ ] = $listener;
         $inserted = true;
       }
-
     }
+
     if( !$inserted )
     {
       $res[ ] = $listener;
     }
-    $this->m_line = $res;
+
+    $this->_line = $res;
   }
 
 
+
   /**
-   * Return a comparison function that tests equality of class name
-   * if the passed argument is a string, or actual object equality if
-   * the argument is an object.
+   * Return a comparison function that tests equality of class name if the passed argument is a string, or actual object
+   * equality if the argument is an object.
    *
    * @param mixed $object
    * @return Closure
@@ -155,12 +165,15 @@ class Middleware
         return $item == $bef;
       };
     }
+
     return $comparer;
   }
 
 
+
   /**
-   * Swap the given listener by a new one. If $target is a string, the first one found will be replaced.
+   * Swap the given listener by a new one.
+   * If $target is a string, the first one found will be replaced.
    *
    * @param string|Listener $target
    * @param Listener $replacement
@@ -169,12 +182,10 @@ class Middleware
   public function swap( $target, Listener $replacement )
   {
     $res = array();
-
-    $is_the_same = $this->get_comparer( $target ); /** @var $is_the_same Closure */
-
+    $is_the_same = $this->get_comparer( $target ); /* @var $is_the_same \Closure */
     $replaced = false;
 
-    foreach( $this->m_line as $line_listener )
+    foreach( $this->_line as $line_listener )
     {
       if( !$replaced && $is_the_same( $target, $line_listener ) )
       {
@@ -187,7 +198,7 @@ class Middleware
       }
     }
 
-    $this->m_line = $res;
+    $this->_line = $res;
     return $replaced;
   }
 
@@ -214,7 +225,7 @@ class Middleware
 
     $called = array();
 
-    foreach( $this->m_line as $listener )
+    foreach( $this->_line as $listener )
     {
       try
       {
@@ -223,8 +234,7 @@ class Middleware
       }
       catch( \Exception $e )
       {
-        /** @var $listerr Listener */
-        foreach( $called as $listerr )
+        foreach( $called as $listerr ) /* @var $listerr Listener */
         {
           $listerr->abort( $request, $response, $e );
         }

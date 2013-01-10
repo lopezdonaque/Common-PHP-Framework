@@ -15,7 +15,7 @@ class Executor implements \Common\Middleware\Listener
    *
    * @var object
    */
-  private $m_handler;
+  private $_handler;
 
 
 
@@ -26,7 +26,7 @@ class Executor implements \Common\Middleware\Listener
    */
   public function __construct( $handler = null )
   {
-    $this->m_handler = $handler;
+    $this->_handler = $handler;
   }
 
 
@@ -50,12 +50,15 @@ class Executor implements \Common\Middleware\Listener
 
     $object = null;
     $method = $request->jsonRpcRequest->method;
+
+    // Extract object and method to call from the method when it contains "." (ie. object_x.method_y)
     if( strpos( $request->jsonRpcRequest->method, '.' ) !== false )
     {
-      list ( $object, $method ) = explode( '.', $request->jsonRpcRequest->method, 2 );
-      if( $this->m_handler )
+      list( $object, $method ) = explode( '.', $request->jsonRpcRequest->method, 2 );
+
+      if( $this->_handler )
       {
-        $object = $this->m_handler;
+        $object = $this->_handler;
       }
       else
       {
@@ -67,7 +70,7 @@ class Executor implements \Common\Middleware\Listener
     }
     else
     {
-      $object = $this->m_handler;
+      $object = $this->_handler;
     }
 
     if( !$object || !is_callable( array( $object, $method ) ) )
@@ -97,17 +100,15 @@ class Executor implements \Common\Middleware\Listener
 
 
   /**
-   * middleware "abort" callback. will be called if someone aborts the
-   * pipeline down the road to allow rolling back or logging.
+   * Middleware "abort" callback.
+   * Will be called if someone aborts the pipeline down the road to allow rolling back or logging.
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
    * @param \Exception $exception
    * @return void
    */
-  public function abort( &$request, &$response, &$exception )
-  {
-  }
+  public function abort( &$request, &$response, &$exception ){}
 
 }
 

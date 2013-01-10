@@ -113,6 +113,25 @@ class Arrays
 
 
   /**
+   * Sorts an array of object by given numeric property
+   *
+   * @param array $array
+   * @param string $property
+   */
+  public static function sort_array_of_objects_by_numeric_property( &$array, $property )
+  {
+    usort( $array, function( $a, $b ) use( $property )
+    {
+      if( $a->$property == $b->$property )
+        return 0;
+
+      return ( $a->$property < $b->$property ) ? -1 : 1;
+    });
+  }
+
+
+
+  /**
    * Displays an array as a html table
    *
    * @param array $array
@@ -128,6 +147,7 @@ class Arrays
    * Returns an array as a html table
    *
    * @param array $array
+   * @return array|string
    */
   public static function get_html( $array )
   {
@@ -379,7 +399,7 @@ class Arrays
    * Filter an associative array with a provided callback function
    *
    * @param array $array
-   * @param Function $callback of the form function f($key,$value)
+   * @param callback $callback of the form function f($key,$value)
    * @return array
    */
   public static function array_filter_assoc( $array, $callback )
@@ -462,7 +482,7 @@ class Arrays
    * @param string $attribute
    * @param string $value
    * @param string $recursive_element
-   * @return object|boolean - In case boolean is returned it's always 'false'
+   * @return object|boolean|\stdClass - In case boolean is returned it's always 'false'
    */
   public static function get_object_from_array( $objects, $attribute, $value, $recursive_element = '' )
   {
@@ -547,7 +567,7 @@ class Arrays
 
     foreach( $iterator AS $element )
     {
-      if( $element == $needle ) /** @var $element mixed */
+      if( $element == $needle ) /* @var $element mixed */
       {
         return true;
       }

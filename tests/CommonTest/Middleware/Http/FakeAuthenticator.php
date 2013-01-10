@@ -1,5 +1,11 @@
 <?php
 
+namespace CommonTest\Middleware\Http;
+
+
+/**
+ * Fake authenticator
+ */
 class FakeAuthenticator implements \Common\Middleware\Authenticator
 {
 
@@ -7,7 +13,7 @@ class FakeAuthenticator implements \Common\Middleware\Authenticator
    * Check the passed credentials in the request to authenticate
    *
    * @param \Common\Middleware\Request $request
-   * @return boolean true if authenticated, false if not
+   * @return bool
    */
   public function authenticate( $request )
   {
@@ -18,8 +24,8 @@ class FakeAuthenticator implements \Common\Middleware\Authenticator
         return true;
       }
     }
+
     return false;
   }
+
 }
-
-

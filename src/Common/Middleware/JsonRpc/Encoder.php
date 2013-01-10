@@ -2,6 +2,7 @@
 
 namespace Common\Middleware\JsonRpc;
 
+
 /**
  * Encodes the given JSON-RPC Response object into the HTTP Response body
  *
@@ -14,11 +15,10 @@ class Encoder implements \Common\Middleware\Listener
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
-   * @return void
    */
   public function call( &$request, &$response )
   {
-    if ( ! $response->httpResponse )
+    if( !$response->httpResponse )
     {
       $response->httpResponse = new \Common\Middleware\Http\Response();
     }
@@ -37,10 +37,7 @@ class Encoder implements \Common\Middleware\Listener
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
    * @param \Exception $exception
-   * @return void
    */
-  public function abort( &$request, &$response, &$exception )
-  {
-  }
+  public function abort( &$request, &$response, &$exception ){}
 
 }

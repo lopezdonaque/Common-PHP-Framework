@@ -2,13 +2,14 @@
 
 namespace Common\Utils;
 
-//http://dhotson.tumblr.com/post/14608885912/whats-new-in-php-5-4
 
 /**
- * Trait to add Observable methods
+ * Class to add Observable methods
+ *
+ * Based on: http://dhotson.tumblr.com/post/14608885912/whats-new-in-php-5-4
  *
  */
-trait Observable
+class Observable
 {
 
   /**
@@ -42,30 +43,28 @@ trait Observable
    * Fires an event
    *
    * @param string $event
-   * @param array $data
+   * @param mixed $data
    */
-  public function fireEvent( $event, $data )
+  public function fireEvent( $event, $data = null )
   {
     if( isset( $this->_listeners[ $event ] ) )
     {
       foreach( $this->_listeners[ $event ] as $listener )
       {
-        $cb = $listener[ 0 ];
-
-        if( is_callable( $handler ) )
+        if( is_callable( $listener ) )
         {
-          call_user_func_array( $handler, array( $this, $data ) );
+          call_user_func_array( $listener, array( $data ) );
         }
         else
         {
-          if( is_array( $handler ) && count( $handler ) == 2 )
+          if( is_array( $listener ) && count( $listener ) == 2 )
           {
-            list( $objectname, $method ) = $handler;
+            list( $objectname, $method ) = $listener;
 
             if( is_string( $objectname ) && is_string( $method ) )
             {
               $obj = new $objectname();
-              call_user_func_array( array( $obj, $method ), array( $this, $data ) );
+              call_user_func_array( array( $obj, $method ), array( $data ) );
             }
           }
         }

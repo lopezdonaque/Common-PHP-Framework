@@ -2,6 +2,7 @@
 
 namespace Common\Middleware\Http;
 
+
 /**
  * Listener for CORS preflighted requests and CORS GET requests.
  * Will intercept CORS requests and add the needed headers.
@@ -16,28 +17,32 @@ class Cors implements \Common\Middleware\Listener
    *
    * @var string|array
    */
-  private $m_accepted_origins;
+  private $_accepted_origins;
+
 
   /**
    * List of accepted HTTP methods
    *
    * @var string[]
    */
-  private $m_accepted_methods;
+  private $_accepted_methods;
+
 
   /**
    * Maximum time (seconds) the CORS response can be cached
    *
    * @var int
    */
-  private $m_access_control_max_age;
+  private $_access_control_max_age;
+
 
   /**
    * Wether the resource supports user credentials
    *
    * @var boolean
    */
-  private $m_supports_credentials;
+  private $_supports_credentials;
+
 
 
   /**
@@ -48,14 +53,14 @@ class Cors implements \Common\Middleware\Listener
    * @param int $maxage [optional] maximum seconds the preflight request can be cached (20 days default)
    * @param boolean $supports_credentials flag that indicates whether the resource supports user credentials in the request. It is true when the resource does and false otherwise
    */
-  public function __construct( $origins = '*', $methods = array( 'GET', 'POST', 'OPTIONS' ), $maxage = 1728000,
-                               $supports_credentials = true )
+  public function __construct( $origins = '*', $methods = array( 'GET', 'POST', 'OPTIONS' ), $maxage = 1728000, $supports_credentials = true )
   {
-    $this->m_accepted_origins = $origins;
-    $this->m_accepted_methods = $methods;
-    $this->m_access_control_max_age = $maxage;
-    $this->m_supports_credentials = $supports_credentials;
-  } //function __construct()
+    $this->_accepted_origins = $origins;
+    $this->_accepted_methods = $methods;
+    $this->_access_control_max_age = $maxage;
+    $this->_supports_credentials = $supports_credentials;
+  }
+
 
 
   /**
@@ -92,6 +97,7 @@ class Cors implements \Common\Middleware\Listener
   }
 
 
+
   /**
    * Respond to a CORS preflight request
    *
@@ -100,30 +106,33 @@ class Cors implements \Common\Middleware\Listener
    * @param string $method
    * @param string $headers
    * @param \Common\Middleware\Http\Response $response
-   * @return void
    */
   private function respond_to_preflight( $origin, $method, $headers, &$response )
   {
     if( $this->is_accepted_origin( $origin ) && $method != '' )
     {
-      if( in_array( $method, $this->m_accepted_methods ) )
+      if( in_array( $method, $this->_accepted_methods ) )
       {
         $response->set_header( 'Access-Control-Allow-Origin', $origin );
-        if( $this->m_supports_credentials )
+
+        if( $this->_supports_credentials )
         {
           $response->set_header( 'Access-Control-Allow-Credentials', 'true' );
         }
-        $response->set_header( 'Access-Control-Max-Age', $this->m_access_control_max_age );
-        $response->set_header( 'Access-Control-Allow-Methods', implode( ', ', $this->m_accepted_methods ) );
+
+        $response->set_header( 'Access-Control-Max-Age', $this->_access_control_max_age );
+        $response->set_header( 'Access-Control-Allow-Methods', implode( ', ', $this->_accepted_methods ) );
+
         if( $headers )
         {
           $response->set_header( 'Access-Control-Allow-Headers', $headers );
         }
-        $response->body = '';
 
+        $response->body = '';
       }
     }
-  } //private function respond_to_preflight( $origin, $method, $headers )
+  }
+
 
 
   /**
@@ -134,18 +143,18 @@ class Cors implements \Common\Middleware\Listener
    * @param string $method incoming "Access-Control-Request-Method" value
    * @param string $headers incoming " Access-Control-Request-Headers" value
    * @param \Common\Middleware\Http\Response $response
-   *
-   * @return void
    */
   private function respond_to_simple_request( $origin, $method, $headers, &$response )
   {
     if( $this->is_accepted_origin( $origin ) )
     {
       $response->set_header( 'Access-Control-Allow-Origin', $origin );
-      if( $this->m_supports_credentials )
+
+      if( $this->_supports_credentials )
       {
         $response->set_header( 'Access-Control-Allow-Credentials', 'true' );
       }
+
       if( $headers )
       {
         $response->set_header( 'Access-Control-Allow-Headers', $headers );
@@ -154,38 +163,49 @@ class Cors implements \Common\Middleware\Listener
   }
 
 
+
   /**
-   * Split the value of the Origin header on the U+0020 SPACE character and check if
-   * any of the resulting tokens is a case-sensitive match for any of the
-   * values in list of origins.
+   * Split the value of the Origin header on the U+0020 SPACE character and check if any of the resulting tokens is a
+   * case-sensitive match for any of the values in list of origins.
    *
    * @param string $origin
    * @return bool
    */
   private function is_accepted_origin( $origin )
   {
-    if( $this->m_accepted_origins === '*' )
+    if( $this->_accepted_origins === '*' )
     {
       return true;
     }
-    if( !is_array( $this->m_accepted_origins ) || count( $this->m_accepted_origins ) == 0 )
+
+    if( !is_array( $this->_accepted_origins ) || count( $this->_accepted_origins ) == 0 )
     {
       return false;
     }
+
     $origins = mb_split( '\s', $origin );
+
     foreach( $origins as $orig )
     {
-      if( in_array( $orig, $this->m_accepted_origins ) )
+      if( in_array( $orig, $this->_accepted_origins ) )
       {
         return true;
       }
     }
+
     return false;
   }
 
 
-  public function abort( &$request, &$response, &$exception )
-  {
-  }
+
+  /**
+   * Middleware "abort" callback.
+   * Will be called if someone aborts the pipeline down the road to allow rolling back or logging.
+   *
+   * @param \Common\Middleware\Request $request
+   * @param \Common\Middleware\Response $response
+   * @param \Exception $exception
+   */
+  public function abort( &$request, &$response, &$exception ){}
 
 }

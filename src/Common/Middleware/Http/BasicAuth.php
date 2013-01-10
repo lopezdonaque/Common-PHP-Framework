@@ -2,6 +2,7 @@
 
 namespace Common\Middleware\Http;
 
+
 /**
  * Check credentials from a HTTP basic_auth request.
  * An authenticator interface obeying object (@see \Common\Middleware\Authenticator) should be passed.
@@ -16,14 +17,15 @@ class BasicAuth implements \Common\Middleware\Listener
    *
    * @var \Common\Middleware\Authenticator
    */
-  private $m_authenticator;
+  private $_authenticator;
+
 
   /**
    * Is this mandatory
    *
    * @var bool
    */
-  private $m_mandatory = false;
+  private $_mandatory = false;
 
 
   /**
@@ -31,23 +33,29 @@ class BasicAuth implements \Common\Middleware\Listener
    *
    * @var string
    */
-  private $m_realm;
+  private $_realm;
+
 
 
   /**
-   * @param boolean $mandatory
+   * Constructor
+   *
+   * @param bool $mandatory
    * @param \Common\Middleware\Authenticator $authenticator
    * @param string $realm
    */
   public function __construct( $mandatory, $authenticator, $realm = "Realm" )
   {
-    $this->m_mandatory = $mandatory;
-    $this->m_realm = $realm;
-    $this->m_authenticator = $authenticator;
+    $this->_mandatory = $mandatory;
+    $this->_realm = $realm;
+    $this->_authenticator = $authenticator;
   }
 
 
+
   /**
+   * Call
+   *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
    */
@@ -58,18 +66,18 @@ class BasicAuth implements \Common\Middleware\Listener
       return;
     }
 
-    $accepted = ! $this->m_mandatory;
+    $accepted = ! $this->_mandatory;
 
     if ( $request->httpRequest->authentication_user )
     {
-      $accepted = $this->m_authenticator->authenticate( $request );
+      $accepted = $this->_authenticator->authenticate( $request );
     }
 
     if( !$accepted )
     {
       $response->httpResponse = new Response();
       $response->httpResponse->code = 401;
-      $response->httpResponse->set_header( 'WWW-Authenticate', 'Basic realm="' . $this->m_realm . '"' );
+      $response->httpResponse->set_header( 'WWW-Authenticate', 'Basic realm="' . $this->_realm . '"' );
       $response->httpResponse->reason = 'Unauthorized';
       $response->httpResponse->body = 'Unauthorized';
       $request->httpRequest->authenticated = false;
@@ -81,17 +89,15 @@ class BasicAuth implements \Common\Middleware\Listener
   }
 
 
+
   /**
    * Abort
    *
-   * @param Request $request
-   * @param Response $response
+   * @param \Common\Middleware\Request $request
+   * @param \Common\Middleware\Response $response
    * @param \Exception $exception
    */
-  public function abort( &$request, &$response, &$exception )
-  {
-  }
-
+  public function abort( &$request, &$response, &$exception ){}
 
 }
 

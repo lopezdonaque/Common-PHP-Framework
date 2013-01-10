@@ -23,6 +23,7 @@ class Debug
     $errorlevels = array
     (
       2047 => 'E_ALL',
+      2048 => 'E_STRICT',
       1024 => 'E_USER_NOTICE',
       512 => 'E_USER_WARNING',
       256 => 'E_USER_ERROR',
@@ -57,7 +58,7 @@ class Debug
    * @param \Exception $e
    * @return array
    */
-  public static function exception_to_array( $e )
+  public static function exception_to_array( \Exception $e )
   {
     return array
     (
@@ -66,6 +67,26 @@ class Debug
       'File' => $e->getFile(),
       'Line' => $e->getLine(),
       'Trace' => $e->getTraceAsString()
+    );
+  }
+
+
+
+  /**
+   * Returns an array with global variables (phpinput, GET, POST, COOKIE, SESSION, SERVER)
+   *
+   * @return array
+   */
+  public static function get_global_variables()
+  {
+    return array
+    (
+      'php://input' => file_get_contents( 'php://input' ),
+      '$_GET' => $_GET,
+      '$_POST' => $_POST,
+      '$_COOKIE' => $_COOKIE,
+      '$_SESSION' => isset( $_SESSION ) ? $_SESSION : array(),
+      '$_SERVER' => $_SERVER
     );
   }
 

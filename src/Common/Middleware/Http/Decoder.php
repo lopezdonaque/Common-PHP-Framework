@@ -16,7 +16,7 @@ class Decoder implements \Common\Middleware\Listener
    *
    * @var bool
    */
-  private $m_debug;
+  private $_debug;
 
 
 
@@ -27,7 +27,7 @@ class Decoder implements \Common\Middleware\Listener
    */
   public function __construct( $debug = false )
   {
-    $this->m_debug = $debug;
+    $this->_debug = $debug;
   }
 
 
@@ -79,7 +79,7 @@ class Decoder implements \Common\Middleware\Listener
   {
     header( "HTTP/1.0 500 Internal server error" );
 
-    if( $this->m_debug )
+    if( $this->_debug )
     {
       header( 'Content-Type: text/plain' );
       echo "REQUEST\r\n";

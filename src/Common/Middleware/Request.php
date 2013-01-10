@@ -1,5 +1,7 @@
 <?php
+
 namespace Common\Middleware;
+
 
 /**
  * Middleware Request container. By default it contains placeholders for HTTP\Request and JsonRpc\Request

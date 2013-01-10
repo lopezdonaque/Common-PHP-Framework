@@ -2,15 +2,15 @@
 
 namespace Common\Middleware\Http;
 
+
 /**
  * Given a middleware request, output the given headers and body.
  * Usually the last piece on a HTTP-based pipeline
  *
- * @package   common
+ * @package common
  */
 class Encoder implements \Common\Middleware\Listener
 {
-
 
   /**
    * Middleware "call" callback
@@ -24,6 +24,7 @@ class Encoder implements \Common\Middleware\Listener
     {
       header( "HTTP/1.1 " . $response->httpResponse->code . ' ' . $response->httpResponse->reason );
     }
+
     foreach( $response->httpResponse->headers as $k => $v )
     {
       header( "$k: $v" );
@@ -37,8 +38,8 @@ class Encoder implements \Common\Middleware\Listener
 
 
   /**
-   * Middleware "abort" callback. will be called if someone aborts the
-   * pipeline down the road to allow rolling back or logging.
+   * Middleware "abort" callback.
+   * Will be called if someone aborts the pipeline down the road to allow rolling back or logging.
    *
    * @see Listener::abort()
    *

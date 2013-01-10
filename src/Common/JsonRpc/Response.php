@@ -2,6 +2,7 @@
 
 namespace Common\JsonRpc;
 
+
 /**
  * A JSON-RPC response, according to jsonrpc.org/spec.html
  *

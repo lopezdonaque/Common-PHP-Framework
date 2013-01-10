@@ -2,10 +2,10 @@
 
 namespace Common\Middleware\JsonRpc;
 
+
 /**
  * Middleware to extract a potential JSON/RPC request from a HTTP request
  *
- * @package common
  */
 class Decoder implements \Common\Middleware\Listener
 {
@@ -39,10 +39,7 @@ class Decoder implements \Common\Middleware\Listener
    * @param $response
    * @param $exception
    */
-  public function abort( &$request, &$response, &$exception )
-  {
-
-  }
+  public function abort( &$request, &$response, &$exception ){}
 
 
 
@@ -95,6 +92,7 @@ class Decoder implements \Common\Middleware\Listener
     )
     {
       $decoded = @json_decode( $request->body );
+
       if( $decoded != null )
       {
         if( isset( $decoded->method ) )
@@ -127,8 +125,10 @@ class Decoder implements \Common\Middleware\Listener
       $response->error->code = \Common\JsonRpc\Error::INVALID_REQUEST;
       $response->error->message = "Request not found or content-type not application/json";
     }
+
     return $response;
   }
+
 
 
   /**
@@ -160,4 +160,3 @@ class Decoder implements \Common\Middleware\Listener
   }
 
 }
-

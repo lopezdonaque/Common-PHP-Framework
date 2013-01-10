@@ -1,17 +1,18 @@
 <?php
 
+namespace CommonTest\Utils;
+
+
 /**
- * String test case
- *
+ * Test for class "String"
  */
 class StringTest extends \PHPUnit_Framework_TestCase
 {
 
-
   /**
-   * Tests \Common\Utils\String::strcut()
+   * Test for method "strcut"
    */
-  public function testStrcut()
+  public function test_strcut()
   {
     $this->assertEquals( "", \Common\Utils\String::strcut( "", 4 ) );
     $this->assertEquals( "T...", \Common\Utils\String::strcut( "Test string", 4 ) );
@@ -19,10 +20,11 @@ class StringTest extends \PHPUnit_Framework_TestCase
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::highlight()
+   * Test for method "highlight"
    */
-  public function testHighlight()
+  public function test_highlight()
   {
     $this->assertEquals( 'Test string', \Common\Utils\String::highlight( 'foo', 'Test string' ) );
     $this->assertEquals( "<em>Test</em> string", \Common\Utils\String::highlight( 'test', 'Test string' ) );
@@ -30,20 +32,22 @@ class StringTest extends \PHPUnit_Framework_TestCase
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::nl2remove()
+   * Test for method "nl2remove"
    */
-  public function testNl2remove()
+  public function test_nl2remove()
   {
     $this->assertEquals( "String", \Common\Utils\String::nl2remove( "String" ) );
     $this->assertEquals( "StringwithCRandLF", \Common\Utils\String::nl2remove( "String\nwith\nCR\rand\nLF" ) );
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::format_name()
+   * Test for method "format_name"
    */
-  public function testFormat_name()
+  public function test_format_name()
   {
     $this->assertEquals( 'Perez, Juan', \Common\Utils\String::format_name( 'Juan', 'Perez' ) );
     $this->assertEquals( 'Juan', \Common\Utils\String::format_name( 'Juan', '' ) );
@@ -51,10 +55,11 @@ class StringTest extends \PHPUnit_Framework_TestCase
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::js_escape()
+   * Test for method "js_escape"
    */
-  public function testJs_escape()
+  public function test_js_escape()
   {
     $this->assertEquals( '', \Common\Utils\String::js_escape( '' ) );
     $this->assertEquals( 'abc', \Common\Utils\String::js_escape( 'abc' ) );
@@ -65,41 +70,43 @@ class StringTest extends \PHPUnit_Framework_TestCase
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::replace_variables()
+   * Test for method "replace_variables"
    */
-  public function testReplace_variables()
+  public function test_replace_variables()
   {
     $this->assertEquals( 'Mary had a little lamb', \Common\Utils\String::replace_variables( 'Mary had a little lamb', array() ) );
-    $this->assertEquals( 'Mary had a bloody chainsaw', \Common\Utils\String::replace_variables( 'Mary had a little lamb', array(
-        'little' => 'bloody', 'lamb' => 'chainsaw' ) ) );
+    $this->assertEquals( 'Mary had a bloody chainsaw', \Common\Utils\String::replace_variables( 'Mary had a little lamb', array( 'little' => 'bloody', 'lamb' => 'chainsaw' ) ) );
   }
 
 
   /**
-   * Tests \Common\Utils\String::starts_with()
+   * Test for method "starts_with"
    */
-  public function testStarts_with()
+  public function test_starts_with()
   {
     $this->assertTrue( \Common\Utils\String::starts_with( '123', '1' ) );
     $this->assertFalse( \Common\Utils\String::starts_with( '321', '1' ) );
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::ends_with()
+   * Test for method "ends_with"
    */
-  public function testEnds_with()
+  public function test_ends_with()
   {
     $this->assertTrue( \Common\Utils\String::ends_with( '123', '3' ) );
     $this->assertFalse( \Common\Utils\String::ends_with( '321', '3' ) );
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::get_bytes()
+   * Test for method "get_bytes"
    */
-  public function testGet_bytes()
+  public function test_get_bytes()
   {
     $this->assertEquals( 1, \Common\Utils\String::get_bytes( '1' ) );
     $this->assertEquals( 1024, \Common\Utils\String::get_bytes( '1k' ) );
@@ -111,17 +118,15 @@ class StringTest extends \PHPUnit_Framework_TestCase
   }
 
 
+
   /**
-   * Tests \Common\Utils\String::parse_template()
+   * Test for method "parse_template"
    */
-  public function testParse_template()
+  public function test_parse_template()
   {
     $this->assertEquals( '{test}', \Common\Utils\String::parse_template( '{test}', array() ) );
-    $this->assertEquals( 'foo', \Common\Utils\String::parse_template( '{test}', array(
-        'test' => 'foo' ) ) );
-    $this->assertEquals( 'This foo is a bar', \Common\Utils\String::parse_template( 'This {thing} is a {test}', array(
-        'thing' => 'foo', 'test' => 'bar' ) ) );
+    $this->assertEquals( 'foo', \Common\Utils\String::parse_template( '{test}', array( 'test' => 'foo' ) ) );
+    $this->assertEquals( 'This foo is a bar', \Common\Utils\String::parse_template( 'This {thing} is a {test}', array( 'thing' => 'foo', 'test' => 'bar' ) ) );
   }
 
 }
-

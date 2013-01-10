@@ -43,6 +43,14 @@ class ExceptionCodes
    */
   const GENERAL_DATA_NOT_FOUND = 4;
 
+
+  /**
+   * Data already exists
+   *
+   * @var int
+   */
+  const GENERAL_DATA_ALREADY_EXISTS = 5;
+
   #endregion
 
 
