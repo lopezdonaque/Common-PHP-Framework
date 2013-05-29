@@ -147,6 +147,14 @@ class ExceptionCodes
    */
   const AUTHENTICATION_SECURE_REQUIRED = 203;
 
+
+  /**
+   * Access not allowed
+   *
+   * @var int
+   */
+  const AUTHENTICATION_ACCESS_NOT_ALLOWED = 204;
+
   #endregion
 
 }
