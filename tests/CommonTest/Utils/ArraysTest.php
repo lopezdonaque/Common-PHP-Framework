@@ -75,6 +75,8 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
   public function testArray_element_multi_sort()
   {
     $empty = array();
+    \Common\Utils\Arrays::array_element_multi_sort( $empty, 'k' );
+    $this->assertEquals( 0, count( $empty ) );
 
     $ela = new \stdClass();
     $ela->value = 'a';
@@ -98,8 +100,34 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
 
     $expected = array( $ela2, $elb2, $elc2 );
 
-    \Common\Utils\Arrays::array_element_multi_sort( $empty, 'k' );
-    $this->assertEquals( 0, count( $empty ) );
+    \Common\Utils\Arrays::array_element_multi_sort( $several, 'value' );
+    $this->assertEquals( 3, count( $several ) );
+    $this->assertEquals( $expected[ 0 ], $several[ 0 ] );
+    $this->assertEquals( $expected[ 2 ], $several[ 1 ] );
+    $this->assertEquals( $expected[ 1 ], $several[ 2 ] );
+
+
+    $ela = new \stdClass();
+    $ela->value = 0;
+
+    $elb = new \stdClass();
+    $elb->value = 1;
+
+    $elc = new \stdClass();
+    $elc->value = 2;
+
+    $several = array( $ela, $elc, $elb );
+
+    $ela2 = new \stdClass();
+    $ela2->value = 0;
+
+    $elb2 = new \stdClass();
+    $elb2->value = 1;
+
+    $elc2 = new \stdClass();
+    $elc2->value = 2;
+
+    $expected = array( $ela2, $elb2, $elc2 );
 
     \Common\Utils\Arrays::array_element_multi_sort( $several, 'value' );
     $this->assertEquals( 3, count( $several ) );

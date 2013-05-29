@@ -339,7 +339,7 @@ class PostgreSqlDatabaseCreator
     // Check if the script exists
     if( !file_exists( $script_name ) )
     {
-      throw new \Common\Database\PostgreSqlDatabaseCreatorException( 'SQL script not found in: ' . $script_name );
+      throw new PostgreSqlDatabaseCreatorException( 'SQL script not found in: ' . $script_name );
     }
 
     $arguments = '';
@@ -402,7 +402,7 @@ class PostgreSqlDatabaseCreator
 
     if( strpos( $result, 'ERROR' ) !== false )
     {
-      throw new \Common\Database\PostgreSqlDatabaseCreatorException( $result );
+      throw new PostgreSqlDatabaseCreatorException( $result );
     }
 
     if( $oldcwd != null )

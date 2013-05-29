@@ -97,6 +97,13 @@ class JsonRpcParser implements \Common\Middleware\Listener
           return false;
         }
 
+        if( !is_array( $decoded_param ) )
+        {
+          $response->api_exception = new \Common\Api\Exception( "The arguments parameter must be a json encoded array", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
+          $response->fullfilled = true;
+          return false;
+        }
+
         $decoded_param = \Common\Utils\Arrays::convert_to_arguments( $decoded_param );
       }
       else
