@@ -112,7 +112,7 @@ class Client
    *
    * @var string
    */
-  public $return_format = self::RETURN_PHP_SERIAL;
+  public $return_format = self::RETURN_JSON;
 
 
   /**
@@ -286,11 +286,19 @@ class Client
    */
   public static function get_builded_url( $url )
   {
-    if( \Common\Utils\Cookies::get( 'start_debug_api' ) )
+    if( \Common\Utils\Cookies::get( 'start_debug_forward' ) )
     {
-      $debug_params = array_flip( array( 'debug_fastfile', 'debug_host', 'use_remote', 'debug_port', 'debug_stop', 'original_url', 'debug_start_session', 'debug_session_id', 'send_debug_header', 'send_sess_end', 'debug_jit' ) );
-      array_walk( $debug_params, function( &$item, $key ){ $item = \Common\Utils\Cookies::get( $key ); } );
-      $debug_params[ 'start_debug' ] = 1;
+      if( \Common\Utils\Cookies::get( '_XDEBUG_SESSION' ) )
+      {
+        $debug_params = array( 'XDEBUG_SESSION_START' => \Common\Utils\Cookies::get( '_XDEBUG_SESSION' ) );
+      }
+      else
+      {
+        $debug_params = array_flip( array( 'debug_fastfile', 'debug_host', 'use_remote', 'debug_port', 'debug_stop', 'original_url', 'debug_start_session', 'debug_session_id', 'send_debug_header', 'send_sess_end', 'debug_jit' ) );
+        array_walk( $debug_params, function( &$item, $key ){ $item = \Common\Utils\Cookies::get( $key ); } );
+        $debug_params[ 'start_debug' ] = 1;
+      }
+
       return $url . '?' . http_build_query( $debug_params );
     }
 
