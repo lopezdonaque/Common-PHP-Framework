@@ -20,6 +20,7 @@ class Filter
   const FL_LOWER = 'lower';
   const FL_LOWER_EQUALS = 'lower_equals';
   const FL_CONTAINS = 'contains';
+  const FL_CONTAINS_SENSITIVE = 'contains_sensitive';
   const FL_BEGINS = 'begins';
   const FL_ENDS = 'ends';
   const FL_INTEGER_EQUAL = 'integer_equal';

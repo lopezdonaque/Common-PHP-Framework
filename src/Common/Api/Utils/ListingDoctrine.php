@@ -170,6 +170,10 @@ class ListingDoctrine extends Listing
         return $f;
 
       case \Common\Api\Entities\Filter::FL_CONTAINS:
+        $f = $expr->like( "LOWER( $column )", $expr->literal( '%' . strtolower( $filter->value ) . '%' ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_CONTAINS_SENSITIVE:
         $f = $expr->like( $column, $expr->literal( '%' . $filter->value . '%' ) );
         return $f;
 

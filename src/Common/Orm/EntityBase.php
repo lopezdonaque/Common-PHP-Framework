@@ -23,6 +23,7 @@ class EntityBase
    * @param  string $method
    * @param  mixed  $args
    * @return void|mixed
+   * @throws \Exception
    */
   public function __call( $method, $args )
   {

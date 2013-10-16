@@ -6,6 +6,8 @@ namespace Common\Middleware\Api;
 /**
  * A middleware request with special fields for API calls
  *
+ * Public properties will be filled by middleware layer like: "Common\Middleware\Http\Decoder".
+ *
  */
 class Request extends \Common\Middleware\Request
 {
@@ -65,14 +67,6 @@ class Request extends \Common\Middleware\Request
 
 
   /**
-   * Calling user credentials
-   *
-   * @var \user_data
-   */
-  public $api_user_data;
-
-
-  /**
    * Transaction id
    *
    * @var string
@@ -104,5 +98,13 @@ class Request extends \Common\Middleware\Request
    * @var string
    */
   public $api_callback;
+
+
+  /**
+   * PHP Class which references to Api
+   *
+   * @var string
+   */
+  public $api_class_name;
 
 }

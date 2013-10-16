@@ -5,10 +5,12 @@
   <property file="${buildlibs}/common-targets/androme-common.properties" />
   <property file="${buildlibs}/common-targets/androme-packages-dependencies.properties" />
 
+
   <!-- **************************************************** -->
   <!-- Define classpath -->
   <!-- **************************************************** -->
   <import file="${buildlibs}/common-targets/define_classpath.xml" />
+
 
 
   <!-- **************************************************** -->
@@ -56,6 +58,7 @@
   <import file="${buildlibs}/common-targets/php_lint.xml" />
 
 
+
   <!-- **************************************************** -->
   <!-- PHPDoc -->
   <!-- **************************************************** -->
@@ -78,17 +81,21 @@
   </target>
 
 
+
   <!-- **************************************************** -->
   <!-- Unit Tests -->
   <!-- **************************************************** -->
   <target name="unit_test">
     <mkdir dir="build" />
-    <exec executable="phpunit" failonerror="true">
+    <exec executable="vendor/bin/phpunit" failonerror="true">
       <arg line="--bootstrap tests/bootstrap.php" />
       <arg line="--log-junit build/phpunit.xml" />
+      <arg value="--colors" /> <!-- Use colors in output. -->
+      <arg value="--debug" /> <!-- Display debbuging information during test execution. -->
       <arg line="tests/" />
     </exec>
   </target>
+
 
 
   <!-- **************************************************** -->
@@ -96,6 +103,7 @@
   <!-- **************************************************** -->
   <import file="${buildlibs}/common-targets/svn_update.xml" />
   <import file="${buildlibs}/common-targets/find_revision.xml" />
+
 
 
   <!-- **************************************************** -->
@@ -125,11 +133,13 @@
   </target>
 
 
+
   <!-- **************************************************** -->
   <!-- Install Debian package -->
   <!-- **************************************************** -->
   <import file="${buildlibs}/common-targets/install_deb_versioned.xml" />
   <import file="${buildlibs}/common-targets/install_deb_versioned_dev.xml" />
+
 
 
   <!-- **************************************************** -->
@@ -145,7 +155,7 @@
   <!-- **************************************************** -->
   <!-- Build targets -->
   <!-- **************************************************** -->
-  <target name="default" depends="clean,phplint,composer,unit_test,clean_composer,phpdoc,package,update_debian_repository_versioned,update_debian_repository_versioned_dev" />
+  <target name="default" depends="clean, phplint, composer, unit_test, clean_composer, phpdoc, package, update_debian_repository_versioned, update_debian_repository_versioned_dev" />
   <target name="prerelease" depends="clean,package,update_integra_repository_versioned" />
 
 </project>
