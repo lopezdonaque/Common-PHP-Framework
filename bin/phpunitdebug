@@ -2,4 +2,5 @@
 export QUERY_STRING='start_debug=1&debug_host=192.168.10.136&debug_port=10137&debug_stop=1&use_remote=1&debug_fastfile=1&original_url=http://fake.server&debug_start_session=1&debug_session_id='$RANDOM
 export PHP_IDE_CONFIG="serverName=default_server"
 
-phpunit $*
+export CURRENT_DIR=$(dirname $0)
+$CURRENT_DIR/../vendor/bin/phpunit $*

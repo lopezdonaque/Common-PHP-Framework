@@ -66,14 +66,13 @@ class JsonRpcParser implements \Common\Middleware\Listener
    *
    * @param \Common\Middleware\Api\Request $request
    * @param \Common\Middleware\Api\Response $response
-   * @return boolean True if all parameters found, false if not.
    */
   private function _check_parameters( &$request, &$response )
   {
     if( !isset( $request->httpRequest->parameters ) )
     {
       $response->api_exception = new \Common\Api\Exception( 'Cannot decode parameters', \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
-      return false;
+      return;
     }
 
     // Mandatory JSON encoded parameters
@@ -83,7 +82,7 @@ class JsonRpcParser implements \Common\Middleware\Listener
       {
         $response->api_exception = new \Common\Api\Exception( "Missing $param in parameters", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
         $response->fullfilled = true;
-        return false;
+        return;
       }
 
       if( $param == 'arguments' )
@@ -94,14 +93,14 @@ class JsonRpcParser implements \Common\Middleware\Listener
         {
           $response->api_exception = new \Common\Api\Exception( "Cannot json-decode $param in parameters", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
           $response->fullfilled = true;
-          return false;
+          return;
         }
 
         if( !is_array( $decoded_param ) )
         {
           $response->api_exception = new \Common\Api\Exception( "The arguments parameter must be a json encoded array", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
           $response->fullfilled = true;
-          return false;
+          return;
         }
 
         $decoded_param = \Common\Utils\Arrays::convert_to_arguments( $decoded_param );
@@ -116,26 +115,11 @@ class JsonRpcParser implements \Common\Middleware\Listener
     }
 
     // Optional parameters
-    foreach( array( 'token', /*'user_data',*/ 'callback', 'return_format', 'transaction_id', 'transport' ) as $param )
+    foreach( array( 'token', 'callback', 'return_format', 'transaction_id', 'transport' ) as $param )
     {
       if( isset( $request->httpRequest->parameters[ $param ] ) )
       {
-        /*if( $param == 'user_data' )
-        {
-          $decoded_param = json_decode( $request->httpRequest->parameters[ $param ], false );
-
-          if( $decoded_param === false )
-          {
-            $response->api_exception = new \Exception( "Cannot json-decode $param in parameters" );
-            $response->fullfilled = true;
-            return false;
-          }
-        }
-        else
-        {*/
-          $decoded_param = $request->httpRequest->parameters[ $param ];
-        //}
-
+        $decoded_param = $request->httpRequest->parameters[ $param ];
         $propname = 'api_'. $param;
         $request->$propname = $decoded_param;
       }

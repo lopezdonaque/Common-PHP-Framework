@@ -34,7 +34,6 @@ class Decoder implements \Common\Middleware\Listener
   /**
    * Abort
    *
-   * @see Listener::abort()
    * @param $request
    * @param $response
    * @param $exception
@@ -76,8 +75,7 @@ class Decoder implements \Common\Middleware\Listener
 
   /**
    * Check if the request is a JSON-RPC one.
-   * It should be a HTTP POST with content-type application/json
-   * and the HTTP body should be json-decodeable.
+   * It should be a HTTP POST with content-type application/json and the HTTP body should be json-decodeable.
    *
    * In case of success will return a JSON-RPC Request object
    * In case of failure will return a errored JSON-RPC response
@@ -87,9 +85,7 @@ class Decoder implements \Common\Middleware\Listener
    */
   protected function parse_jsonrpc_request( &$request )
   {
-    if( $request->get_header( 'Content-type', false ) == 'application/json'
-    && $request->get_header( 'Content-length' ) > 0
-    )
+    if( $request->get_header( 'Content-type', false ) == 'application/json' && $request->get_header( 'Content-length' ) > 0 )
     {
       $decoded = @json_decode( $request->body );
 

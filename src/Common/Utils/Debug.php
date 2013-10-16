@@ -66,7 +66,7 @@ class Debug
       'Code' => $e->getCode(),
       'File' => $e->getFile(),
       'Line' => $e->getLine(),
-      'Trace' => $e->getTraceAsString()
+      'Trace' => explode( '#', $e->getTraceAsString() ) // Used "getTraceAsString" instead of "getTrace" to ignore "arguments"
     );
   }
 

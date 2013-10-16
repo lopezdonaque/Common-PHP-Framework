@@ -398,11 +398,18 @@ class PostgreSqlDatabaseCreator
     }
 
     // Execute the command
-    $result = shell_exec( $comm );
+    exec( $comm, $output, $result );
 
-    if( strpos( $result, 'ERROR' ) !== false )
+    $result_message = implode( ' ', $output );
+
+    if( $result != 0 )
     {
-      throw new PostgreSqlDatabaseCreatorException( $result );
+      throw new PostgreSqlDatabaseCreatorException( $result_message );
+    }
+
+    if( strpos( $result_message, 'ERROR' ) !== false )
+    {
+      throw new PostgreSqlDatabaseCreatorException( $result_message );
     }
 
     if( $oldcwd != null )

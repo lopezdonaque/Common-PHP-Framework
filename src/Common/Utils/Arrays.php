@@ -212,6 +212,29 @@ class Arrays
 
 
   /**
+   * Checks if the key of the array exists to return the value or returns the notset_value parameter
+   *
+   * @param array $array
+   * @param string $key
+   * @param mixed $notset_return_value
+   * @return mixed
+   */
+  public static function get_item_by_property_value( $array, $property, $value, $notset_return_value = null )
+  {
+    foreach( $array as $item )
+    {
+      if( $item->$property == $value )
+      {
+        return $item;
+      }
+    }
+
+    return $notset_return_value;
+  }
+
+
+
+  /**
    * Join an array using a template and replacing text with a sprintf
    *
    * @param string[string] $array

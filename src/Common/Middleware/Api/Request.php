@@ -67,14 +67,6 @@ class Request extends \Common\Middleware\Request
 
 
   /**
-   * Calling user credentials
-   *
-   * @var \user_data
-   */
-  public $api_user_data;
-
-
-  /**
    * Transaction id
    *
    * @var string
