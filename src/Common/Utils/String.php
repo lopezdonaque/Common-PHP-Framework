@@ -76,7 +76,6 @@ class String
   public static function format_name( $name, $surname )
   {
     $complete_name = ( $surname != '' && $name != '' ) ? "$surname, $name" : "$surname$name";
-
     return $complete_name;
   }
 

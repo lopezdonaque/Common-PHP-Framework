@@ -15,13 +15,13 @@ namespace Common\Api;
  *     \Common\Api\Client::$TOKEN = 'foo';
  *
  * - Usage:
- *     $client = new \Common\Api\Client();
- *     $result = $client->request( 'login', 'login_user', array( 'user', 'password' ) );
+ *     $client = new \Common\Api\Client( 'login', 'login_user', array( 'user', 'password' ) );
+ *     $result = $client->request();
  *
  * - Usage with specific URL:
- *     $client = new \Common\Api\Client();
+ *     $client = new \Common\Api\Client( 'login', 'login_user', array( 'user', 'password' ) );
  *     $client->url = 'http://api.domain.com';
- *     $result = $client->request( 'login', 'login_user', array( 'user', 'password' ) );
+ *     $result = $client->request();
  *
  */
 class Client
@@ -112,7 +112,7 @@ class Client
    *
    * @var string
    */
-  public $return_format = self::RETURN_PHP_SERIAL;
+  public $return_format = self::RETURN_JSON;
 
 
   /**
@@ -133,22 +133,31 @@ class Client
 
 
   /**
-   * Do request
+   * Constructor
    *
    * @param string $entity
    * @param string $method
    * @param array $arguments
    * @param array $files
-   * @return object
    */
-  public function request( $entity, $method, $arguments = array(), $files = array() )
+  public function __construct( $entity, $method, $arguments = array(), $files = array() )
   {
     $this->transaction_id = uniqid( $entity . $method . ':' );
     $this->entity = $entity;
     $this->method = $method;
     $this->arguments = $arguments;
     $this->files = $files;
+  }
 
+
+
+  /**
+   * Do request
+   *
+   * @return object
+   */
+  public function request()
+  {
     $curl_resource = $this->get_curl_resource();
     $response_text = curl_exec( $curl_resource ); // Response text could be json, phpserial or invalid response (if php prints fatal, notice, etc.)
     curl_close( $curl_resource );
