@@ -156,12 +156,12 @@ class Arrays
     if( is_array( $array ) )
     {
       $text .= "<table border=1 cellspacing=0 cellpadding=3 width=100%>";
-      $text .= '<tr><td colspan=2 style="background-color:#333333;"><strong><span style="color: white;"></span></strong></td></tr>';
+      $text .= '<tr><td colspan=50 style="background-color: #333333;"></td></tr>';
 
       if( empty( $array ) )
       {
         $text .= '<tr>';
-        $text .= '<td valign="top" style="width:40px;background-color:#F0F0F0;"></td>';
+        $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top;">&nbsp;</td>';
         $text .= '<td>EMPTY</td>';
         $text .= '</tr>';
       }
@@ -170,12 +170,11 @@ class Arrays
         foreach( $array as $k => $v )
         {
           $text .= '<tr>';
-          $text .= '<td valign="top" style="width:40px;background-color:#F0F0F0;"><strong>' . htmlentities( $k ) . '</strong></td>';
+          $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold;">' . htmlentities( $k ) . '</td>';
           $text .= '<td>' . self::get_html( $v ) . '</td>';
           $text .= '</tr>';
         }
       }
-
 
       $text .= "</table>";
       return $text;

@@ -142,9 +142,9 @@ class Decoder implements \Common\Middleware\Listener
     $jsonrequest->method = $decoded->method;
     $jsonrequest->params = ( isset( $decoded->params ) ) ? $decoded->params : array();
 
-    foreach ($decoded as $id => $value)
+    foreach( $decoded as $id => $value )
     {
-      if ( $id == 'jsonrpc' || $id == 'id' || $id == 'method' ||$id == 'params')
+      if( $id == 'jsonrpc' || $id == 'id' || $id == 'method' || $id == 'params' )
       {
         continue;
       }
