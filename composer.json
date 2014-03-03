@@ -26,10 +26,10 @@
   "require":
   {
     "php": ">=5.3.0",
-    "zendframework/zend-loader": "2.1.*",
-    "zendframework/zend-file": "2.1.*",
-    "zendframework/zend-mail": "2.1.*",
+    "zendframework/zend-loader": "2.*",
+    "zendframework/zend-file": "2.*",
+    "zendframework/zend-mail": "2.*",
     "doctrine/common": "2.*",
-    "monolog/monolog": "1.6.0"
+    "monolog/monolog": "1.6.*"
   }
 }
