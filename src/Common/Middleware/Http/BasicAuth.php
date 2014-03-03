@@ -68,7 +68,7 @@ class BasicAuth implements \Common\Middleware\Listener
 
     $accepted = ! $this->_mandatory;
 
-    if ( $request->httpRequest->authentication_user )
+    if( $request->httpRequest->authentication_user )
     {
       $accepted = $this->_authenticator->authenticate( $request );
     }

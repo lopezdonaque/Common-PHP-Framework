@@ -98,7 +98,6 @@ class Decoder implements \Common\Middleware\Listener
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
-   * @return void
    */
   public function call( &$request, &$response )
   {

@@ -59,7 +59,7 @@ class Decoder implements \Common\Middleware\Listener
 
     if( $parsed instanceof \Common\JsonRpc\Response )
     {
-      if ( $this->_fullfill_if_not_jsonrpc )
+      if( $this->_fullfill_if_not_jsonrpc )
       {
         $response->fullfilled = true;
         $response->jsonRpcResponse = $parsed;

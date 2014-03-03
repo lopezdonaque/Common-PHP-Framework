@@ -13,23 +13,21 @@ interface Listener
 {
 
   /**
-   * middleware "call" callback
+   * Middleware "call" callback
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
-   * @return void
    */
   public function call( &$request, &$response );
 
 
   /**
-   * middleware "abort" callback. will be called if someone aborts the
+   * Middleware "abort" callback. will be called if someone aborts the
    * pipeline down the road to allow rolling back or logging.
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
    * @param \Exception $exception
-   * @return void
    */
   public function abort( &$request, &$response, &$exception );
 

@@ -3,19 +3,15 @@
   "description": "Common PHP Library",
   "type": "library",
 
-  "version": "1.0.0",
-
-  "repositories":
-  [
-    {
-      "type": "composer",
-      "url": "http://packages.zendframework.com/"
-    }
-  ],
-
   "require-dev":
   {
-    "phpunit/PHPUnit": "3.7.*"
+    "common-ant-buildlibs/phplint": "dev-master",
+    "common-ant-buildlibs/debpkg": "dev-master",
+    "common-ant-buildlibs/antdeb": "dev-master",
+    "common-ant-buildlibs/svn": "dev-master",
+    "common-ant-buildlibs/git": "dev-master",
+    "phpunit/PHPUnit": "3.7.*",
+    "apigen/apigen": "2.8.0"
   },
 
   "autoload":

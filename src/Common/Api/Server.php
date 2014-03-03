@@ -116,8 +116,6 @@ class Server
 
   /**
    * Handles request
-   *
-   * @return void
    */
   public function handle()
   {

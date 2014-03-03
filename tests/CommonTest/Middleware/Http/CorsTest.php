@@ -21,7 +21,7 @@ class CorsTest extends \PHPUnit_Framework_TestCase
     $response = new \Common\Middleware\Response();
     $response->httpResponse = new \Common\Middleware\Http\Response();
 
-    $mid_cors = new \Common\Middleware\Http\Cors( '*' );
+    $mid_cors = new \Common\Middleware\Http\Cors();
     $mid_cors->call( $request, $response );
     $this->assertArrayNotHasKey( 'Access-Control-Allow-Origin', $response->httpResponse->headers );
 
@@ -48,7 +48,7 @@ class CorsTest extends \PHPUnit_Framework_TestCase
     $response = new \Common\Middleware\Response();
     $response->httpResponse = new \Common\Middleware\Http\Response();
 
-    $mid_cors = new \Common\Middleware\Http\Cors( '*' );
+    $mid_cors = new \Common\Middleware\Http\Cors();
     $mid_cors->call( $request, $response );
     $this->assertArrayHasKey( 'Access-Control-Allow-Origin', $response->httpResponse->headers );
     $this->assertArrayNotHasKey( 'Access-Control-Max-Age', $response->httpResponse->headers );

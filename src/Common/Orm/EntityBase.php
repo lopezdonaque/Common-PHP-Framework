@@ -27,28 +27,28 @@ class EntityBase
    */
   public function __call( $method, $args )
   {
-    //Find words by camelCase (e.g. setUsername, getUserGroup)
-    $method_words = preg_split('/(?=[A-Z])/', $method);
+    // Find words by camelCase (e.g. setUsername, getUserGroup)
+    $method_words = preg_split( '/(?=[A-Z])/', $method );
     $method_name = $method_words[0];
 
-    //Remove the method name from method_words
-    unset($method_words[0]);
+    // Remove the method name from method_words
+    unset( $method_words[0] );
 
-    //The remaining method_words make up the property name
-    //UserGroup becomes user_group
-    $property = strtolower(implode('_', $method_words));
+    // The remaining method_words make up the property name
+    // UserGroup becomes user_group
+    $property = strtolower( implode( '_', $method_words ) );
 
-    //Property doesn't exist
-    if (! property_exists($this, $property))
+    // Property doesn't exist
+    if( !property_exists( $this, $property ) )
     {
       throw new \Exception( "Tried to call {$method}() on " . __CLASS__ . ". Property '{$property}' doesn't exist." );
     }
 
-    //Set() methods
-    if ($method_name == 'set')
+    // Set() methods
+    if( $method_name == 'set' )
     {
-      //More than one argument was given
-      if (count($args) > 1)
+      // More than one argument was given
+      if( count( $args ) > 1 )
       {
         throw new \Exception( "Tried to set " . __CLASS__ . "->{$property}. 1 argument expected; " . count($args) . " given.");
       }
@@ -56,8 +56,8 @@ class EntityBase
       $this->$property = $args[0];
     }
 
-    //Get() methods
-    if ($method_name == 'get')
+    // Get() methods
+    if( $method_name == 'get' )
     {
       return $this->$property;
     }

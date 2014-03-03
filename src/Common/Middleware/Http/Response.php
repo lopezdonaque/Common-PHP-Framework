@@ -47,7 +47,6 @@ class Response
    *
    * @param string $name
    * @param string $value
-   * @return void
    */
   public function set_header( $name, $value )
   {
@@ -71,7 +70,7 @@ class Response
 
     foreach( $this->headers as $header => $value )
     {
-      if ( $header_name == strtolower($header) )
+      if( $header_name == strtolower($header) )
       {
         $header_value = $value;
       }

@@ -6,10 +6,16 @@
   <property file="${buildlibs}/common-targets/androme-packages-dependencies.properties" />
 
 
+
   <!-- **************************************************** -->
-  <!-- Define classpath -->
+  <!-- Build Libs -->
   <!-- **************************************************** -->
-  <import file="${buildlibs}/common-targets/define_classpath.xml" />
+  <import file="composer.xml" />
+  <import file="vendor/common-ant-buildlibs/phplint/phplint.xml" />
+  <import file="vendor/common-ant-buildlibs/svn/svn.xml" />
+  <import file="vendor/common-ant-buildlibs/git/git.xml" />
+  <import file="vendor/common-ant-buildlibs/debpkg/debpkg.xml" />
+  <import file="vendor/common-ant-buildlibs/antdeb/antdeb.xml" />
 
 
 
@@ -30,45 +36,15 @@
 
 
   <!-- **************************************************** -->
-  <!-- Composer (required to run unit tests) -->
-  <!-- **************************************************** -->
-  <target name="composer">
-    <exec executable="wget" failonerror="true">
-      <arg value="-nc" />
-      <arg value="http://getcomposer.org/composer.phar" />
-    </exec>
-    <exec executable="php" failonerror="true">
-      <arg value="composer.phar" />
-      <arg value="install" />
-      <arg value="--dev" />
-    </exec>
-  </target>
-
-  <target name="clean_composer">
-    <delete dir="vendor" />
-    <delete file="composer.phar" />
-    <delete file="composer.lock" />
-  </target>
-
-
-
-  <!-- **************************************************** -->
-  <!-- PHP Lint -->
-  <!-- **************************************************** -->
-  <import file="${buildlibs}/common-targets/php_lint.xml" />
-
-
-
-  <!-- **************************************************** -->
   <!-- PHPDoc -->
   <!-- **************************************************** -->
   <target name="phpdoc">
     <exec executable="php">
-      <arg value="${buildlibs}/apigen/apigen.php" />
+      <arg value="vendor/apigen/apigen/apigen.php" />
       <arg value="-s" />
       <arg value="src" />
       <arg value="-d" />
-      <arg value="Common/docs" />
+      <arg value="build/docs" />
       <arg value="--title" />
       <arg value="${package.description} documentation" />
       <arg value="--autocomplete" />
@@ -99,63 +75,38 @@
 
 
   <!-- **************************************************** -->
-  <!-- Sets property "svn.info.lastRev" to head svn revision -->
-  <!-- **************************************************** -->
-  <import file="${buildlibs}/common-targets/svn_update.xml" />
-  <import file="${buildlibs}/common-targets/find_revision.xml" />
-
-
-
-  <!-- **************************************************** -->
   <!-- Generate Debian package -->
   <!-- **************************************************** -->
-  <target name="package" depends="find_revision">
+  <target name="package" depends="common-debpkg-definenames">
 
+    <fail/>
     <!-- Deployment package -->
-    <deb package="${package.fullname_versioned}" todir="." section="libs" depends="${dependencies.androme-commom-php-framework}">
-      <version upstream="${version}" />
+    <common-antdeb package="${package.fullname_versioned}" todir="." section="libs" depends="${dependencies.androme-commom-php-framework}">
+      <version upstream="${package.version}" />
       <maintainer name="${maintainer.name}" email="${maintainer.email}" />
       <description synopsis="${package.description}">${package.description}</description>
       <tarfileset dir="src" prefix="${package.install.dir}/${package.majorversion}">
         <include name="**/**" />
       </tarfileset>
-    </deb>
+    </common-antdeb>
 
     <!-- Devel package without dependencies -->
-    <deb package="${package.fullname_versioned_dev}" todir="." section="libs">
-      <version upstream="${version}" />
+    <common-antdeb package="${package.fullname_versioned_dev}" todir="." section="libs">
+      <version upstream="${package.version}" />
       <maintainer name="${maintainer.name}" email="${maintainer.email}" />
       <description synopsis="${package.description}">${package.description}</description>
       <tarfileset dir="src" prefix="${package.install.dir}/${package.majorversion}">
         <include name="**/**" />
       </tarfileset>
-    </deb>
+    </common-antdeb>
   </target>
-
-
-
-  <!-- **************************************************** -->
-  <!-- Install Debian package -->
-  <!-- **************************************************** -->
-  <import file="${buildlibs}/common-targets/install_deb_versioned.xml" />
-  <import file="${buildlibs}/common-targets/install_deb_versioned_dev.xml" />
-
-
-
-  <!-- **************************************************** -->
-  <!-- Update Debian repository (Adds the current package to the Debian repository) -->
-  <!-- **************************************************** -->
-  <import file="${buildlibs}/common-targets/hostname.xml" />
-  <import file="${buildlibs}/common-targets/update_debian_repository_versioned.xml" />
-  <import file="${buildlibs}/common-targets/update_debian_repository_versioned_dev.xml" />
-  <import file="${buildlibs}/common-targets/update_integra_repository_versioned.xml" />
 
 
 
   <!-- **************************************************** -->
   <!-- Build targets -->
   <!-- **************************************************** -->
-  <target name="default" depends="clean, phplint, composer, unit_test, clean_composer, phpdoc, package, update_debian_repository_versioned, update_debian_repository_versioned_dev" />
-  <target name="prerelease" depends="clean,package,update_integra_repository_versioned" />
+  <target name="default" />
+  <target name="devel" depends="clean, composer-clean, common-phplint-check, composer-install, unit_test, phpdoc, package" />
 
 </project>

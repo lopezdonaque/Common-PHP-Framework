@@ -49,6 +49,12 @@ class Xml
         $key = $numeric_index_prefix . (string) $key;
       }
 
+      // Empty keys are invalid
+      if( !$key )
+      {
+        $key = 'empty_' . date( 'YmdHis' ) . '_' . mt_rand( 10000, 99999 );
+      }
+
       if( is_array( $value ) )
       {
         $xml->startElement( $key );
@@ -65,14 +71,8 @@ class Xml
         continue;
       }
 
-      if( !$value )
-      {
-        $xml->writeElement( $key, '' );
-      }
-      else
-      {
-        $xml->writeElement( $key, $value );
-      }
+      // Use "@" to ignore "Invalid Element Name" errors
+      @$xml->writeElement( $key, $value ?: '' );
     }
   }
 

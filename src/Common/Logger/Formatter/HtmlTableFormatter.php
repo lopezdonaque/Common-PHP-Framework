@@ -18,7 +18,7 @@ class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
    */
   public function format( array $record )
   {
-    $clean_record = \Common\Utils\Arrays::object_to_array( \Doctrine\Common\Util\Debug::export( $record, 50 ) );
+    $clean_record = \Common\Utils\Arrays::object_to_array( \Doctrine\Common\Util\Debug::export( $record, 5 ) );
     return \Common\Utils\Arrays::get_html( $clean_record );
   }
 

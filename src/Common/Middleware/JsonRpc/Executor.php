@@ -36,7 +36,6 @@ class Executor implements \Common\Middleware\Listener
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
-   * @return void
    */
   public function call( &$request, &$response )
   {
@@ -106,7 +105,6 @@ class Executor implements \Common\Middleware\Listener
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
    * @param \Exception $exception
-   * @return void
    */
   public function abort( &$request, &$response, &$exception ){}
 
