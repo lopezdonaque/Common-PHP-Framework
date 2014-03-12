@@ -4,7 +4,7 @@ namespace Common\Middleware\Api;
 
 
 /**
- * Response encoding for Phemium-API-JSON/RPC requests
+ * Response encoding for API JSONRPC requests
  *
  */
 class JsonRpcResponseEncoder implements \Common\Middleware\Listener
