@@ -45,18 +45,6 @@ class StringTest extends \PHPUnit_Framework_TestCase
 
 
   /**
-   * Test for method "format_name"
-   */
-  public function test_format_name()
-  {
-    $this->assertEquals( 'Perez, Juan', \Common\Utils\String::format_name( 'Juan', 'Perez' ) );
-    $this->assertEquals( 'Juan', \Common\Utils\String::format_name( 'Juan', '' ) );
-    $this->assertEquals( '', \Common\Utils\String::format_name( '', '' ) );
-  }
-
-
-
-  /**
    * Test for method "js_escape"
    */
   public function test_js_escape()

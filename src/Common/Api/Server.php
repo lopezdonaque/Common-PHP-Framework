@@ -31,7 +31,7 @@ class Server
   /**
    * User data
    *
-   * @var user_data
+   * @var \stdClass
    */
   private $_user_data;
 
@@ -185,7 +185,7 @@ class Server
   {
     if( !$this->_transaction_id )
     {
-      $this->response( new Exception( 'Missing transaction_id in parameters', Exception::CALL_MISSING_TRANSACTION_ID ) );
+      $this->response( new Exception( 'Missing transaction_id in parameters', ExceptionCodes::CALL_MISSING_TRANSACTION_ID ) );
     }
 
     /*if( !$this->_token && !$this->_user_data )
@@ -195,29 +195,29 @@ class Server
 
     if( !$this->_entity )
     {
-      $this->response( new Exception( 'Missing entity in parameters', Exception::CALL_MISSING_ENTITY ) );
+      $this->response( new Exception( 'Missing entity in parameters', ExceptionCodes::CALL_MISSING_ENTITY ) );
     }
 
     if( !$this->_method )
     {
-      $this->response( new Exception( 'Missing method in parameters', Exception::CALL_MISSING_METHOD ) );
+      $this->response( new Exception( 'Missing method in parameters', ExceptionCodes::CALL_MISSING_METHOD ) );
     }
 
     if( !is_array( $this->_arguments ) )
     {
-      $this->response( new Exception( 'Missing arguments in parameters', Exception::CALL_MISSING_ARGUMENTS ) );
+      $this->response( new Exception( 'Missing arguments in parameters', ExceptionCodes::CALL_MISSING_ARGUMENTS ) );
     }
 
     if( !$this->_return_format )
     {
       $this->_return_format = self::RETURN_JSON;
-      $this->response( new Exception( 'Missing return_format in parameters', Exception::CALL_MISSING_FORMAT ) );
+      $this->response( new Exception( 'Missing return_format in parameters', ExceptionCodes::CALL_MISSING_FORMAT ) );
     }
 
     if( $this->_return_format == self::RETURN_JSONP && !$this->_callback )
     {
       $this->_return_format = self::RETURN_JSON;
-      $this->response( new Exception( 'Missing callback in parameters', Exception::CALL_MISSING_JSONP_CALLBACK ) );
+      $this->response( new Exception( 'Missing callback in parameters', ExceptionCodes::CALL_MISSING_JSONP_CALLBACK ) );
     }
   }
 
@@ -241,7 +241,7 @@ class Server
     // Check if api class exists
     if( !class_exists( $api_name, true ) )
     {
-      $this->response( new Exception( "Api {$this->_entity} not found", Exception::CALL_ENTITY_NOT_FOUND ) );
+      $this->response( new Exception( "Api {$this->_entity} not found", ExceptionCodes::CALL_ENTITY_NOT_FOUND ) );
     }
 
     //
@@ -254,7 +254,7 @@ class Server
       // Check if method exists
       if( !method_exists( $api, $this->_method ) )
       {
-        $this->response( new Exception( "Method $this->_method of API {$this->_entity} not found", Exception::CALL_METHOD_NOT_FOUND ) );
+        $this->response( new Exception( "Method $this->_method of API {$this->_entity} not found", ExceptionCodes::CALL_METHOD_NOT_FOUND ) );
       }
 
       $result = call_user_func_array( array( $api, $this->_method ), $args );

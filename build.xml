@@ -79,7 +79,6 @@
   <!-- **************************************************** -->
   <target name="package" depends="common-debpkg-definenames">
 
-    <fail/>
     <!-- Deployment package -->
     <common-antdeb package="${package.fullname_versioned}" todir="." section="libs" depends="${dependencies.androme-commom-php-framework}">
       <version upstream="${package.version}" />

@@ -65,23 +65,6 @@ class String
 
 
   /**
-   * With a given Name, Surname pair this method formats it as
-   * Surname, Name
-   * If either of Name, Surname is missing, the other part is returned alone.
-   *
-   * @param string $name
-   * @param string $surname
-   * @return string
-   */
-  public static function format_name( $name, $surname )
-  {
-    $complete_name = ( $surname != '' && $name != '' ) ? "$surname, $name" : "$surname$name";
-    return $complete_name;
-  }
-
-
-
-  /**
    * Escape a string for JavaScript (quotes escaped, \' or \")
    *
    * @param string $str

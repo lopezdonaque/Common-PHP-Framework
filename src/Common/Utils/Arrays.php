@@ -214,7 +214,8 @@ class Arrays
    * Checks if the key of the array exists to return the value or returns the notset_value parameter
    *
    * @param array $array
-   * @param string $key
+   * @param string $property
+   * @param string $value
    * @param mixed $notset_return_value
    * @return mixed
    */

@@ -103,7 +103,8 @@ class JsonRpcParser implements \Common\Middleware\Listener
           return;
         }
 
-        $decoded_param = \Common\Utils\Arrays::convert_to_arguments( $decoded_param );
+        // Convert associative arrays to stdClass
+        $decoded_param = json_decode( json_encode( $decoded_param ) );
       }
       else
       {

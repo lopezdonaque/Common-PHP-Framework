@@ -81,7 +81,8 @@ class Executor implements \Common\Middleware\Listener
       return;
     }
 
-    $args = \Common\Utils\Arrays::convert_to_arguments( $request->jsonRpcRequest->params );
+    // Convert associative arrays to stdClass
+    $args = json_decode( json_encode( $request->jsonRpcRequest->params ) );
 
     try
     {

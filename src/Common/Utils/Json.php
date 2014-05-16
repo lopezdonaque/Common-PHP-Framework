@@ -33,6 +33,9 @@ class Json
   {
     switch( \json_last_error() )
     {
+      case JSON_ERROR_NONE:
+        return '';
+
       case JSON_ERROR_DEPTH:
         return 'Maximum stack depth exceeded';
 
@@ -42,14 +45,12 @@ class Json
       case JSON_ERROR_SYNTAX:
         return 'Syntax error, malformed JSON';
 
-      case JSON_ERROR_NONE:
-        return '';
-
       case 5: //JSON_ERROR_UTF8 (PHP 5.3.1)
         return 'Malformed UTF-8 characters, possibly incorrectly encoded';
-    }
 
-    return '';
+      default:
+        return 'Unknown';
+    }
   }
 
 }

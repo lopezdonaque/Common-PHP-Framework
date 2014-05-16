@@ -72,4 +72,21 @@ class Utils
     }
   }
 
+
+
+  /**
+   * Returns an id_value object
+   *
+   * @param string $id
+   * @param string $value
+   * @return \Common\Api\Entities\IdValue
+   */
+  public static function get_id_value( $id = null, $value = null )
+  {
+    $id_value = new \Common\Api\Entities\IdValue();
+    $id_value->id = $id;
+    $id_value->value = $value;
+    return $id_value;
+  }
+
 }

@@ -2,6 +2,7 @@
 
 namespace Common\Utils;
 
+
 /**
  * Ftp utility methods
  *
@@ -18,9 +19,8 @@ class Ftp
    * @param string $password
    * @param string $dir
    * @param string $filename
-   *
-   * @throws \Exception
    * @return string
+   * @throws \Exception
    */
   public static function get_file_contents_from_ftp( $server, $user, $password, $dir, $filename )
   {
@@ -84,9 +84,8 @@ class Ftp
    * @param string $password
    * @param string $dir
    * @param string $pattern
-   *
-   * @throws \Exception
    * @return string[string]
+   * @throws \Exception
    */
   public static function get_all_file_contents_from_ftp_directory( $server, $user, $password, $dir, $pattern )
   {
@@ -167,9 +166,8 @@ class Ftp
    * @param string $dir
    * @param string $filename
    * @param string $contents
-   *
-   * @throws \Exception
    * @return boolean
+   * @throws \Exception
    */
   public static function put_file_contents_to_ftp( $server, $user, $password, $dir, $filename, $contents )
   {
@@ -215,4 +213,5 @@ class Ftp
     ftp_close( $conn_id );
     return true;
   }
+
 }
