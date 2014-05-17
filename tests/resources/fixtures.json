@@ -1,0 +1,23 @@
+{
+  "inserts":
+  [
+    {
+      "table": "users",
+      "columns":
+      {
+        "name": "Albert_"
+      }
+    }
+  ],
+
+  "updates":
+  [
+    {
+      "table": "users",
+      "columns":
+      {
+        "name": "Albert"
+      }
+    }
+  ]
+}

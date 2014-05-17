@@ -45,18 +45,19 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
    */
   public function test_exec()
   {
-    $host = '127.0.0.1';
-
     $options = array
     (
-      'host' => $host,
       'user' => 'root',
-      'template' => 'template0',
       'dbname' => $this->_dbname,
       'procedural_languages' => array( 'plpgsql' ),
       'sql_scripts' => array
       (
         $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'database.sql'
+      ),
+      'fixtures' => array
+      (
+        $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'fixtures.sql',
+        $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'fixtures.json'
       )
     );
 
@@ -64,8 +65,7 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
     $dc->exec();
 
     // Check if database has been created
-    $num_ddbb = trim( shell_exec( '/usr/bin/psql -U root -h ' . $host . ' -l | grep ' . $this->_dbname .' | wc -l' ) );
-    $this->assertEquals( '1', $num_ddbb );
+    $this->assertTrue( $dc->exists_database() );
   }
 
 
@@ -75,13 +75,9 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
    */
   public function test_invalid_sql_script()
   {
-    $host = '127.0.0.1';
-
     $options = array
     (
-      'host' => $host,
       'user' => 'root',
-      'template' => 'template0',
       'dbname' => $this->_dbname,
       'sql_scripts' => array
       (

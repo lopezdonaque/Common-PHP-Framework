@@ -1,5 +1,5 @@
 
-CREATE TABLE test
+CREATE TABLE users
 (
-  column1 VARCHAR(5)
+  name VARCHAR(100)
 );
