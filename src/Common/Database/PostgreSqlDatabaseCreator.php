@@ -41,7 +41,7 @@ class PostgreSqlDatabaseCreator
   {
     if( $this->_config->dropdb && $this->exists_database() )
     {
-      $this->_execute_db_command( 'dropdb', array( $this->_config->dbname ) );
+      $this->_execute_db_command( 'dropdb', $this->_config->dbname );
     }
 
     // Execute create database
