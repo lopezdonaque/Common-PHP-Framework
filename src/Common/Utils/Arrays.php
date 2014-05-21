@@ -170,7 +170,7 @@ class Arrays
         foreach( $array as $k => $v )
         {
           $text .= '<tr>';
-          $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold;">' . htmlentities( $k ) . '</td>';
+          $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold; cursor: pointer;" onclick="this.nextSibling.style.display = ( this.nextSibling.style.display == \'none\' ) ? \'\' : \'none\';">' . htmlentities( $k ) . '</td>';
           $text .= '<td>' . self::get_html( $v ) . '</td>';
           $text .= '</tr>';
         }

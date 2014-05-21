@@ -100,7 +100,6 @@ abstract class Listing
 
   /**
    * Implemented by child class
-   *
    */
   public function get_count_query(){}
 
@@ -108,7 +107,6 @@ abstract class Listing
 
   /**
    * Implemented by child class
-   *
    */
   public function get_list_query(){}
 

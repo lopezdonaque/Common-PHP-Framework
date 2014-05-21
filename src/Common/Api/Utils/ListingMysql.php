@@ -7,9 +7,8 @@ namespace Common\Api\Utils;
  * Class to retrieve results list
  *
  */
-class ListMySql extends Listing
+class ListingMySql extends Listing
 {
-
 
   /**
    * Constructor

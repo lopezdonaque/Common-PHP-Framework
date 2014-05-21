@@ -155,7 +155,8 @@ class ListingDoctrine extends Listing
    * Returns filter as DQL expression
    *
    * @param \Common\Api\Entities\Filter $filter
-   * @return Expr
+   * @return \Doctrine\ORM\Query\Expr
+   * @throws \Exception
    */
   private function _get_filter_expression( $filter )
   {
@@ -192,6 +193,17 @@ class ListingDoctrine extends Listing
       case \Common\Api\Entities\Filter::FL_LOWER_EQUALS:
         $f = $expr->lte( $column, $expr->literal( $filter->value ) );
         return $f;
+
+      case \Common\Api\Entities\Filter::FL_IN:
+        $f = $expr->in( $column, $expr->literal( $filter->value ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_NOT_IN:
+        $f = $expr->notIn( $column, $expr->literal( $filter->value ) );
+        return $f;
+
+      default:
+        throw new \Exception( 'Wrong operator' );
     }
   }
 

@@ -10,9 +10,10 @@ namespace Common\Api\Entities;
 class Filter
 {
 
-  /**
+  /**#@+
    * Filter operators constants
    *
+   * @var string
    */
   const FL_EQUALS = 'equals';
   const FL_BIGGER = 'bigger';
@@ -24,6 +25,9 @@ class Filter
   const FL_BEGINS = 'begins';
   const FL_ENDS = 'ends';
   const FL_INTEGER_EQUAL = 'integer_equal';
+  const FL_IN = 'in';
+  const FL_NOT_IN = 'not_in';
+  /**#@-*/
 
 
   /**
