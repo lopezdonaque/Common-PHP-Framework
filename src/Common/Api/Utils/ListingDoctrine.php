@@ -195,11 +195,11 @@ class ListingDoctrine extends Listing
         return $f;
 
       case \Common\Api\Entities\Filter::FL_IN:
-        $f = $expr->in( $column, $expr->literal( $filter->value ) );
+        $f = $expr->in( $column, $filter->value );
         return $f;
 
       case \Common\Api\Entities\Filter::FL_NOT_IN:
-        $f = $expr->notIn( $column, $expr->literal( $filter->value ) );
+        $f = $expr->notIn( $column, $filter->value );
         return $f;
 
       default:
