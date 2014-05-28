@@ -202,6 +202,26 @@ class ListingDoctrine extends Listing
         $f = $expr->notIn( $column, $filter->value );
         return $f;
 
+      case \Common\Api\Entities\Filter::FL_EQUALS_TIMESTAMP:
+        $f = $expr->eq( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_BIGGER_TIMESTAMP:
+        $f = $expr->gt( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_BIGGER_EQUALS_TIMESTAMP:
+        $f = $expr->gte( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_LOWER_TIMESTAMP:
+        $f = $expr->lt( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_LOWER_EQUALS_TIMESTAMP:
+        $f = $expr->lte( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
+        return $f;
+
       default:
         throw new \Exception( 'Wrong operator' );
     }

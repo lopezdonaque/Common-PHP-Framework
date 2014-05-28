@@ -20,6 +20,13 @@ class Filter
   const FL_BIGGER_EQUALS = 'bigger_equals';
   const FL_LOWER = 'lower';
   const FL_LOWER_EQUALS = 'lower_equals';
+
+  const FL_EQUALS_TIMESTAMP = 'equals_timestamp';
+  const FL_BIGGER_TIMESTAMP = 'bigger_timestamp';
+  const FL_BIGGER_EQUALS_TIMESTAMP = 'bigger_equals_timestamp';
+  const FL_LOWER_TIMESTAMP = 'lower_timestamp';
+  const FL_LOWER_EQUALS_TIMESTAMP = 'lower_equals_timestamp';
+
   const FL_CONTAINS = 'contains';
   const FL_CONTAINS_SENSITIVE = 'contains_sensitive';
   const FL_BEGINS = 'begins';
