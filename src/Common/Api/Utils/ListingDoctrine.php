@@ -170,6 +170,10 @@ class ListingDoctrine extends Listing
         $f = $expr->eq( $column, $expr->literal( $filter->value ) );
         return $f;
 
+      case \Common\Api\Entities\Filter::FL_NOT_EQUALS:
+        $f = $expr->neq( $column, $expr->literal( $filter->value ) );
+        return $f;
+
       case \Common\Api\Entities\Filter::FL_CONTAINS:
         $f = $expr->like( "LOWER( $column )", $expr->literal( '%' . strtolower( $filter->value ) . '%' ) );
         return $f;

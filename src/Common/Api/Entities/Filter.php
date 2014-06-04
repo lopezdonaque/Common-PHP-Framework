@@ -16,6 +16,7 @@ class Filter
    * @var string
    */
   const FL_EQUALS = 'equals';
+  const FL_NOT_EQUALS = 'not_equals';
   const FL_BIGGER = 'bigger';
   const FL_BIGGER_EQUALS = 'bigger_equals';
   const FL_LOWER = 'lower';

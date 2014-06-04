@@ -45,7 +45,7 @@ class ListOptions
   /**
    * Filters
    *
-   * @var filter[]
+   * @var \Common\Api\Entities\Filter[]
    */
   public $filters = array();
 
@@ -53,7 +53,7 @@ class ListOptions
   /**
    * Search filters
    *
-   * @var search_filter[]
+   * @var \Common\Api\Entities\SearchFilter[]
    */
   public $search_filters = array();
 

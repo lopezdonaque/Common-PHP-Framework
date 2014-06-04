@@ -13,7 +13,7 @@ class SearchFilter
   /**
    * Filters
    *
-   * @var filter[]
+   * @var \Common\Api\Entities\Filter[]
    */
   public $filters;
 

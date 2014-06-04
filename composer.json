@@ -29,7 +29,7 @@
     "zendframework/zend-loader": "2.*",
     "zendframework/zend-file": "2.*",
     "zendframework/zend-mail": "2.*",
-    "doctrine/common": "2.*",
+    "doctrine/orm": "2.*",
     "monolog/monolog": "1.*"
   }
 }
