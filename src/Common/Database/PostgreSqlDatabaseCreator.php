@@ -16,7 +16,7 @@ class PostgreSqlDatabaseCreator
    *
    * @var PostgreSqlDatabaseCreatorConfig
    */
-  private $_config;
+  public $config;
 
 
 
@@ -27,7 +27,7 @@ class PostgreSqlDatabaseCreator
    */
   public function __construct( $config = array() )
   {
-    $this->_config = is_array( $config ) ? new PostgreSqlDatabaseCreatorConfig( $config ) : $config;
+    $this->config = is_array( $config ) ? new PostgreSqlDatabaseCreatorConfig( $config ) : $config;
   }
 
 
@@ -39,9 +39,9 @@ class PostgreSqlDatabaseCreator
    */
   public function exec()
   {
-    if( $this->_config->dropdb && $this->exists_database() )
+    if( $this->config->dropdb && $this->exists_database() )
     {
-      $this->_execute_db_command( 'dropdb', $this->_config->dbname );
+      $this->_execute_db_command( 'dropdb', $this->config->dbname );
     }
 
     // Execute create database
@@ -82,32 +82,32 @@ class PostgreSqlDatabaseCreator
   {
     $arguments = '';
 
-    if( $this->_config->host )
+    if( $this->config->host )
     {
-      $arguments .= '-h ' . $this->_config->host;
+      $arguments .= '-h ' . $this->config->host;
     }
 
-    if( $this->_config->port )
+    if( $this->config->port )
     {
-      $arguments .= ' -p ' . $this->_config->port;
+      $arguments .= ' -p ' . $this->config->port;
     }
 
-    if( $this->_config->user )
+    if( $this->config->user )
     {
-      $arguments .= ' -U ' . $this->_config->user;
+      $arguments .= ' -U ' . $this->config->user;
     }
 
-    if( $this->_config->owner )
+    if( $this->config->owner )
     {
-      $arguments .= ' -O ' . $this->_config->owner;
+      $arguments .= ' -O ' . $this->config->owner;
     }
 
-    if( $this->_config->tablespace )
+    if( $this->config->tablespace )
     {
-      $arguments .= ' -D ' . $this->_config->tablespace;
+      $arguments .= ' -D ' . $this->config->tablespace;
     }
 
-    $arguments .= " -E utf8 -T " . $this->_config->template . " " . $this->_config->dbname . " 2>&1";
+    $arguments .= " -E utf8 -T " . $this->config->template . " " . $this->config->dbname . " 2>&1";
 
     if( !$this->_execute_db_command( 'createdb', $arguments ) )
     {
@@ -126,7 +126,7 @@ class PostgreSqlDatabaseCreator
    */
   private function _create_langs()
   {
-    foreach( $this->_config->procedural_languages as $lang )
+    foreach( $this->config->procedural_languages as $lang )
     {
       if( !$this->_execute_createlang_command( $lang ) )
       {
@@ -149,22 +149,22 @@ class PostgreSqlDatabaseCreator
   {
     $arguments = '';
 
-    if( $this->_config->host )
+    if( $this->config->host )
     {
-      $arguments .= '-h ' . $this->_config->host;
+      $arguments .= '-h ' . $this->config->host;
     }
 
-    if( $this->_config->port )
+    if( $this->config->port )
     {
-      $arguments .= " -p " . $this->_config->port;
+      $arguments .= " -p " . $this->config->port;
     }
 
-    if( $this->_config->user )
+    if( $this->config->user )
     {
-      $arguments .= " -U " . $this->_config->user;
+      $arguments .= " -U " . $this->config->user;
     }
 
-    $arguments .= " $lang " . $this->_config->dbname . " 2>&1";
+    $arguments .= " $lang " . $this->config->dbname . " 2>&1";
 
     if( !$this->_execute_db_command( 'createlang', $arguments ) )
     {
@@ -183,7 +183,7 @@ class PostgreSqlDatabaseCreator
    */
   private function _execute_sql_scripts()
   {
-    foreach( $this->_config->sql_scripts as $script )
+    foreach( $this->config->sql_scripts as $script )
     {
       if( !$this->_execute_sql_script( $script ) )
       {
@@ -203,7 +203,7 @@ class PostgreSqlDatabaseCreator
    */
   private function _execute_fixtures()
   {
-    foreach( $this->_config->fixtures as $file )
+    foreach( $this->config->fixtures as $file )
     {
       $method = ( pathinfo( $file, PATHINFO_EXTENSION ) == 'sql' ) ? '_execute_sql_script' : '_add_data';
 
@@ -235,22 +235,22 @@ class PostgreSqlDatabaseCreator
 
     $arguments = '';
 
-    if( $this->_config->host )
+    if( $this->config->host )
     {
-      $arguments .= '-h ' . $this->_config->host;
+      $arguments .= '-h ' . $this->config->host;
     }
 
-    if( $this->_config->port )
+    if( $this->config->port )
     {
-      $arguments .= " -p " . $this->_config->port;
+      $arguments .= " -p " . $this->config->port;
     }
 
-    if( $this->_config->user )
+    if( $this->config->user )
     {
-      $arguments .= " -U " . $this->_config->user;
+      $arguments .= " -U " . $this->config->user;
     }
 
-    $arguments .= " -d " . $this->_config->dbname . " -f " . $filename . " 2>&1";
+    $arguments .= " -d " . $this->config->dbname . " -f " . $filename . " 2>&1";
 
     // Set the script path as current path to allow execute other scripts from the master db_script ("\i other.sql")
     $oldcwd = getcwd();
@@ -273,7 +273,7 @@ class PostgreSqlDatabaseCreator
    */
   public function exists_database()
   {
-    $num_ddbb = shell_exec( '/usr/bin/psql -h ' . $this->_config->host . ' -l | grep -w ' . $this->_config->dbname . ' | wc -l' );
+    $num_ddbb = shell_exec( '/usr/bin/psql -h ' . $this->config->host . ' -l | grep -w ' . $this->config->dbname . ' | wc -l' );
     $num_ddbb = (int) trim( $num_ddbb );
     return ( $num_ddbb > 0 );
   }
@@ -298,7 +298,7 @@ class PostgreSqlDatabaseCreator
 
     try
     {
-      $pdo = new \PDO( "pgsql:dbname={$this->_config->dbname};host={$this->_config->host}", $this->_config->user, $this->_config->password );
+      $pdo = new \PDO( "pgsql:dbname={$this->config->dbname};host={$this->config->host}", $this->config->user, $this->config->password );
       $pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
     }
     catch( \Exception $e )
@@ -405,10 +405,10 @@ class PostgreSqlDatabaseCreator
    */
   private function _execute_db_command( $command, $arguments, $oldcwd = null )
   {
-    if( $this->_config->db_installation_path )
+    if( $this->config->db_installation_path )
     {
       // Prepare the command with the complete path
-      $comm = '"' . $this->_config->db_installation_path . DIRECTORY_SEPARATOR . $command . '" ' . $arguments;
+      $comm = '"' . $this->config->db_installation_path . DIRECTORY_SEPARATOR . $command . '" ' . $arguments;
     }
     else
     {
