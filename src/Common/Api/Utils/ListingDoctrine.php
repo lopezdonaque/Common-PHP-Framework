@@ -14,7 +14,7 @@ class ListingDoctrine extends Listing
    * Constructor
    *
    * @param \Doctrine\ORM\QueryBuilder $basic_query
-   * @param \Common\Api\Entities\ListOptions $list_options
+   * @param \Common\Api\Entities\ListOptions|object $list_options
    */
   public function __construct( $basic_query, $list_options )
   {
