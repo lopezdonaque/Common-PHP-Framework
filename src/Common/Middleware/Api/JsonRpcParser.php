@@ -12,38 +12,6 @@ class JsonRpcParser implements \Common\Middleware\Listener
 {
 
   /**
-   * Wether to stop processing if the request is not JSON/RPC
-   *
-   * @var boolean
-   */
-  private $_abort_if_not_jsonrpc;
-
-
-
-  /**
-   * Create the JSON/RPC extractor
-   *
-   * @param boolean $abort_if_not_jsonrpc Wether to stop processing if the request is not JSON/RPC
-   */
-  public function __construct( $abort_if_not_jsonrpc = false )
-  {
-    $this->_abort_if_not_jsonrpc = $abort_if_not_jsonrpc;
-  }
-
-
-
-  /**
-   * Abort
-   *
-   * @param \Common\Middleware\Api\Request $request
-   * @param \Common\Middleware\Api\Response $response
-   * @param \Exception $exception
-   */
-  public function abort( &$request, &$response, &$exception ){}
-
-
-
-  /**
    * Check if the request is a JSON/RPC request
    *
    * @param \Common\Middleware\Api\Request $request
@@ -126,5 +94,16 @@ class JsonRpcParser implements \Common\Middleware\Listener
       }
     }
   }
+
+
+
+  /**
+   * Abort
+   *
+   * @param \Common\Middleware\Api\Request $request
+   * @param \Common\Middleware\Api\Response $response
+   * @param \Exception $exception
+   */
+  public function abort( &$request, &$response, &$exception ){}
 
 }
