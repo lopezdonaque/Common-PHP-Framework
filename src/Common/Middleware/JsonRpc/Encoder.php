@@ -31,8 +31,8 @@ class Encoder implements \Common\Middleware\Listener
 
 
   /**
-   * Middleware "abort" callback. will be called if someone aborts the
-   * pipeline down the road to allow rolling back or logging.
+   * Middleware "abort" callback.
+   * Will be called if someone aborts the pipeline down the road to allow rolling back or logging.
    *
    * @param \Common\Middleware\Request $request
    * @param \Common\Middleware\Response $response
