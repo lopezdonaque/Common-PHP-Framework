@@ -122,7 +122,7 @@ class ListingDoctrine extends Listing
       $conditions[] = $this->_get_filter_expression( $filter )->__toString();
     }
 
-    $res = implode( ' AND ' , $conditions );
+    $res = implode( ' AND ', $conditions );
 
     return $res;
   }
@@ -144,7 +144,7 @@ class ListingDoctrine extends Listing
       $conditions[] = $this->_get_filter_expression( $filter )->__toString();
     }
 
-    $res = implode( ' OR ' , $conditions );
+    $res = implode( ' OR ', $conditions );
 
     return $res;
   }

@@ -76,7 +76,11 @@ abstract class Listing
   public function __construct( $basic_query, $list_options )
   {
     $this->_basic_query = $basic_query;
-    $this->_setup_from_list_options( $list_options );
+
+    if( $list_options )
+    {
+      $this->_setup_from_list_options( $list_options );
+    }
   }
 
 
