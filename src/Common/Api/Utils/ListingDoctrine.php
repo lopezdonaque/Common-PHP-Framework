@@ -123,7 +123,6 @@ class ListingDoctrine extends Listing
     }
 
     $res = implode( ' AND ', $conditions );
-
     return $res;
   }
 
@@ -145,7 +144,6 @@ class ListingDoctrine extends Listing
     }
 
     $res = implode( ' OR ', $conditions );
-
     return $res;
   }
 
