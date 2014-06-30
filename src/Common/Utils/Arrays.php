@@ -443,25 +443,25 @@ class Arrays
 
 
   /**
-   * Find the first element of the array that callback returns true.
-   * Return its key.
+   * Find the first element of the array that callback returns true
    *
    * @param array $array
    * @param callback $callback
-   * @return int|string or null if not found
+   * @param bool $return_key
+   * @return mixed|int|string or null if not found
    */
-  public static function find_first( $array, $callback )
+  public static function find_first( $array, $callback, $return_key = true )
   {
     if( !is_callable( $callback ) )
     {
       return null;
     }
 
-    foreach( $array as $k => $v )
+    foreach( $array as $k => $item )
     {
-      if( $callback( $v ) )
+      if( $callback( $item ) === true )
       {
-        return $k;
+        return $return_key ? $k : $item;
       }
     }
 
