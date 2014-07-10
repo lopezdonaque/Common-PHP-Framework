@@ -147,7 +147,7 @@ class ClassMapAutoloader
       // Get the ClassFileLocator, and pass it the library path
       $l = new \Zend\File\ClassFileLocator( $libraryPath );
 
-      foreach( $l as $file )
+      foreach( $l as $file ) /* @var $file \Zend\File\PhpClassFile */
       {
         $filename = $file->getPathname();
 
