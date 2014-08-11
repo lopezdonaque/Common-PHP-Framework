@@ -73,7 +73,7 @@ class ListingNativeSql extends Listing
    */
   public function get_count_query()
   {
-    $count_query = "SELECT count(*) FROM ( $this->_basic_query ) AS A ";
+    $count_query = "SELECT count(*) FROM ( $this->_basic_query ) AS A WHERE 1 = 1 ";
 
     // Filters
     if( is_array( $this->_filters ) && count( $this->_filters ) > 0 )
@@ -125,7 +125,7 @@ class ListingNativeSql extends Listing
   {
     $conditions = array();
 
-    foreach( $filters as $filter )
+    foreach( $filters[ 0 ]->filters as $filter )
     {
       $conditions[] = $this->_get_filter_expression( $filter );
     }
