@@ -151,6 +151,7 @@ class ListingNativeSql extends Listing
     switch( $filter->operator )
     {
       case \Common\Api\Entities\Filter::FL_EQUALS:
+      case \Common\Api\Entities\Filter::FL_INTEGER_EQUAL:
         $filter_value = self::convert_to_db_format( $filter_value );
         return " UPPER( $filter_name::VARCHAR ) SIMILAR TO UPPER( '$filter_value'::VARCHAR ) ";
 
