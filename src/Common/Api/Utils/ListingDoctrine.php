@@ -119,7 +119,8 @@ class ListingDoctrine extends Listing
 
     foreach( $filters as $filter )
     {
-      $conditions[] = $this->_get_filter_expression( $filter )->__toString();
+      $condition = $this->_get_filter_expression( $filter );
+      $conditions[] = is_string( $condition ) ? $condition : $condition->__toString();
     }
 
     $res = implode( ' AND ', $conditions );
@@ -140,7 +141,8 @@ class ListingDoctrine extends Listing
 
     foreach( $filters[ 0 ]->filters as $filter )
     {
-      $conditions[] = $this->_get_filter_expression( $filter )->__toString();
+      $condition = $this->_get_filter_expression( $filter );
+      $conditions[] = is_string( $condition ) ? $condition : $condition->__toString();
     }
 
     $res = implode( ' OR ', $conditions );
@@ -205,11 +207,11 @@ class ListingDoctrine extends Listing
         return $f;
 
       case \Common\Api\Entities\Filter::FL_IS_NULL:
-        $f = $expr->isNull( $column, $filter->value );
+        $f = $expr->isNull( $column );
         return $f;
 
       case \Common\Api\Entities\Filter::FL_IS_NOT_NULL:
-        $f = $expr->isNotNull( $column, $filter->value );
+        $f = $expr->isNotNull( $column );
         return $f;
 
       case \Common\Api\Entities\Filter::FL_EQUALS_TIMESTAMP:
