@@ -35,6 +35,8 @@ class Filter
   const FL_INTEGER_EQUAL = 'integer_equal';
   const FL_IN = 'in';
   const FL_NOT_IN = 'not_in';
+  const FL_IS_NULL = 'is_null';
+  const FL_IS_NOT_NULL = 'is_not_null';
   /**#@-*/
 
 

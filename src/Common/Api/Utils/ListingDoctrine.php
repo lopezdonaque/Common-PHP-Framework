@@ -204,6 +204,14 @@ class ListingDoctrine extends Listing
         $f = $expr->notIn( $column, $filter->value );
         return $f;
 
+      case \Common\Api\Entities\Filter::FL_IS_NULL:
+        $f = $expr->isNull( $column, $filter->value );
+        return $f;
+
+      case \Common\Api\Entities\Filter::FL_IS_NOT_NULL:
+        $f = $expr->isNotNull( $column, $filter->value );
+        return $f;
+
       case \Common\Api\Entities\Filter::FL_EQUALS_TIMESTAMP:
         $f = $expr->eq( $column, $expr->literal( date( 'Y-m-d H:i:s', $filter->value ) ) );
         return $f;

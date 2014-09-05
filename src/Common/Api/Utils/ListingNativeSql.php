@@ -187,15 +187,21 @@ class ListingNativeSql extends Listing
         $filter_value = self::convert_to_db_format( $filter_value );
         return " $filter_name::VARCHAR <= '$filter_value'::VARCHAR ";
 
+      case \Common\Api\Entities\Filter::FL_IN:
+        $filter_value = is_array( $filter_value ) ? implode( ',', $filter_value ) : $filter_value;
+        $filter_value = self::convert_to_db_format( $filter_value ); // Expects e.g."1,3,6"
+        return " $filter_name IN ( $filter_value ) ";
+
       case \Common\Api\Entities\Filter::FL_NOT_IN:
         $filter_value = is_array( $filter_value ) ? implode( ',', $filter_value ) : $filter_value;
         $filter_value = self::convert_to_db_format( $filter_value ); // Expects e.g."1,3,6"
         return " $filter_name NOT IN ( $filter_value ) ";
 
-      case \Common\Api\Entities\Filter::FL_IN:
-        $filter_value = is_array( $filter_value ) ? implode( ',', $filter_value ) : $filter_value;
-        $filter_value = self::convert_to_db_format( $filter_value ); // Expects e.g."1,3,6"
-        return " $filter_name IN ( $filter_value ) ";
+      case \Common\Api\Entities\Filter::FL_IS_NULL:
+        return " $filter_name::VARCHAR IS NULL ";
+
+      case \Common\Api\Entities\Filter::FL_IS_NOT_NULL:
+        return " $filter_name::VARCHAR IS NOT NULL ";
 
       default:
         throw new \Exception( 'Wrong operator' );

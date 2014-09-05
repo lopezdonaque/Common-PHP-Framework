@@ -35,7 +35,7 @@ class TimestampType extends \Doctrine\DBAL\Types\DateTimeType
       return $datetime;
     }
 
-    return $datetime->format( 'U' );
+    return (int) $datetime->format( 'U' );
   }
 
 
