@@ -4,7 +4,7 @@ namespace Common\Utils;
 
 
 /**
- * Class to manage XML utility methods
+ * XML utility methods
  *
  */
 class Xml
@@ -92,7 +92,7 @@ class Xml
     $text = preg_replace( "/> +<\//", "></", $text );
 
     $doc = new \DOMDocument();
-    $dom->preserveWhiteSpace = false;
+    $doc->preserveWhiteSpace = false;
 
     if( !$doc->loadXML( $text ) )
     {
@@ -123,6 +123,29 @@ class Xml
   public static function compress_xml( $xml )
   {
     return implode( '', array_map( 'trim', explode( "\n", $xml ) ) );
+  }
+
+
+
+  /**
+   * Returns if the xml is valid or not
+   *
+   * @param string $xml_str
+   * @param string[] $errors
+   * @return bool
+   */
+  public static function is_valid_xml( $xml_str, &$errors = null )
+  {
+    libxml_use_internal_errors( true );
+
+    if( !( $doc = simplexml_load_string( $xml_str ) ) )
+    {
+      $errors = array_map( function( $error ){ return $error->message; }, libxml_get_errors() );
+      libxml_clear_errors();
+      return false;
+    }
+
+    return true;
   }
 
 }
