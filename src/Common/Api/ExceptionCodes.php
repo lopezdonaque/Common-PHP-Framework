@@ -10,151 +10,80 @@ namespace Common\Api;
 class ExceptionCodes
 {
 
-  #region General errors 0-99
-
-  /**
-   * Internal error
+  /**#@+
+   * General errors 0-99
    *
    * @var int
    */
+
+  /** Internal error */
   const GENERAL_INTERNAL_ERROR = 0;
 
-
-  /**
-   * Database exception
-   *
-   * @var int
-   */
+  /** Database exception */
   const GENERAL_DATABASE_EXCEPTION = 1;
 
-
-  /**
-   * Invalid argument
-   *
-   * @var int
-   */
+  /** Invalid argument */
   const GENERAL_INVALID_ARGUMENT = 2;
 
-
-  /**
-   * Data not found
-   *
-   * @var int
-   */
+  /** Data not found */
   const GENERAL_DATA_NOT_FOUND = 4;
 
-
-  /**
-   * Data already exists
-   *
-   * @var int
-   */
+  /** Data already exists */
   const GENERAL_DATA_ALREADY_EXISTS = 5;
+  /**#@-*/
 
-  #endregion
 
-
-  #region Call request errors 100-109
 
   /**
-   * Missing transaction id
+   * Call request errors 100-109
    *
    * @var int
    */
+
+  /** Missing transaction id */
   const CALL_MISSING_TRANSACTION_ID = 100;
 
-
-  /**
-   * Missing entity
-   *
-   * @var int
-   */
-  const CALL_MISSING_ENTITY = 101;
-
-
-  /**
-   * Missing method
-   *
-   * @var int
-   */
+  /** Missing method */
   const CALL_MISSING_METHOD = 102;
 
+  /** Missing entity */
+  const CALL_MISSING_ENTITY = 101;
 
-  /**
-   * Missing arguments
-   *
-   * @var int
-   */
+  /** Missing arguments */
   const CALL_MISSING_ARGUMENTS = 103;
 
-
-  /**
-   * Missing format
-   *
-   * @var int
-   */
+  /** Missing format */
   const CALL_MISSING_FORMAT = 104;
 
-
-  /**
-   * Missing jsonp callback
-   *
-   * @var int
-   */
+  /** Missing jsonp callback */
   const CALL_MISSING_JSONP_CALLBACK = 105;
 
-
-  /**
-   * Entity not found
-   *
-   * @var int
-   */
+  /** Entity not found */
   const CALL_ENTITY_NOT_FOUND = 106;
 
-
-  /**
-   * Method not found
-   *
-   * @var int
-   */
+  /** Method not found */
   const CALL_METHOD_NOT_FOUND = 107;
+  /**#@-*/
 
-  #endregion
 
-
-  #region Authentication errors 200-209
 
   /**
-   * Invalid credentials
+   * Authentication errors 200-209
    *
    * @var int
    */
+
+  /** Invalid credentials */
   const AUTHENTICATION_INVALID_CREDENTIALS = 200;
 
-
-  /**
-   * Token not found
-   *
-   * @var int
-   */
+  /** Token not found */
   const AUTHENTICATION_TOKEN_NOT_FOUND = 201;
 
-
-  /**
-   * SSL/TLS access for authentication is mandatory
-   *
-   * @var int
-   */
+  /** SSL/TLS access for authentication is mandatory */
   const AUTHENTICATION_SECURE_REQUIRED = 203;
 
-
-  /**
-   * Access not allowed
-   *
-   * @var int
-   */
+  /** Access not allowed */
   const AUTHENTICATION_ACCESS_NOT_ALLOWED = 204;
-
-  #endregion
+  /**#@-*/
 
 }

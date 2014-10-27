@@ -2,8 +2,6 @@
 <project default="default">
 
   <property file="build.properties" />
-  <property file="${buildlibs}/common-targets/androme-common.properties" />
-  <property file="${buildlibs}/common-targets/androme-packages-dependencies.properties" />
 
 
 
@@ -75,37 +73,9 @@
 
 
   <!-- **************************************************** -->
-  <!-- Generate Debian package -->
-  <!-- **************************************************** -->
-  <target name="package" depends="common-debpkg-definenames">
-
-    <!-- Deployment package -->
-    <common-antdeb package="${package.fullname_versioned}" todir="." section="libs" depends="${dependencies.androme-commom-php-framework}">
-      <version upstream="${package.version}" />
-      <maintainer name="${maintainer.name}" email="${maintainer.email}" />
-      <description synopsis="${package.description}">${package.description}</description>
-      <tarfileset dir="src" prefix="${package.install.dir}/${package.majorversion}">
-        <include name="**/**" />
-      </tarfileset>
-    </common-antdeb>
-
-    <!-- Devel package without dependencies -->
-    <common-antdeb package="${package.fullname_versioned_dev}" todir="." section="libs">
-      <version upstream="${package.version}" />
-      <maintainer name="${maintainer.name}" email="${maintainer.email}" />
-      <description synopsis="${package.description}">${package.description}</description>
-      <tarfileset dir="src" prefix="${package.install.dir}/${package.majorversion}">
-        <include name="**/**" />
-      </tarfileset>
-    </common-antdeb>
-  </target>
-
-
-
-  <!-- **************************************************** -->
   <!-- Build targets -->
   <!-- **************************************************** -->
   <target name="default" />
-  <target name="devel" depends="clean, composer-clean, common-phplint-check, composer-install, unit_test, phpdoc, package" />
+  <target name="devel" depends="clean, composer-clean, common-phplint-check, composer-install, unit_test, phpdoc" />
 
 </project>
