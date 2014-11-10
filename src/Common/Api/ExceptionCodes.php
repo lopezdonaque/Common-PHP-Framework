@@ -84,6 +84,9 @@ class ExceptionCodes
 
   /** Access not allowed */
   const AUTHENTICATION_ACCESS_NOT_ALLOWED = 204;
+
+  /** Token expired */
+  const AUTHENTICATION_TOKEN_EXPIRED = 205;
   /**#@-*/
 
 }
