@@ -43,11 +43,11 @@ class ExceptionCodes
   /** Missing transaction id */
   const CALL_MISSING_TRANSACTION_ID = 100;
 
-  /** Missing method */
-  const CALL_MISSING_METHOD = 102;
-
   /** Missing entity */
   const CALL_MISSING_ENTITY = 101;
+
+  /** Missing method */
+  const CALL_MISSING_METHOD = 102;
 
   /** Missing arguments */
   const CALL_MISSING_ARGUMENTS = 103;
@@ -79,14 +79,14 @@ class ExceptionCodes
   /** Token not found */
   const AUTHENTICATION_TOKEN_NOT_FOUND = 201;
 
+  /** Token expired */
+  const AUTHENTICATION_TOKEN_EXPIRED = 202;
+
   /** SSL/TLS access for authentication is mandatory */
   const AUTHENTICATION_SECURE_REQUIRED = 203;
 
   /** Access not allowed */
   const AUTHENTICATION_ACCESS_NOT_ALLOWED = 204;
-
-  /** Token expired */
-  const AUTHENTICATION_TOKEN_EXPIRED = 205;
   /**#@-*/
 
 }
