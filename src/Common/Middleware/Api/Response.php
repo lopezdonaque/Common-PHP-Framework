@@ -49,4 +49,12 @@ class Response extends \Common\Middleware\Response
    */
   public $api_return_value;
 
+
+  /**
+   * Instance of the api class
+   *
+   * @var mixed
+   */
+  public $api_instance;
+
 }
