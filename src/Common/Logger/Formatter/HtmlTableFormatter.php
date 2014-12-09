@@ -10,6 +10,29 @@ namespace Common\Logger\Formatter;
 class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
 {
 
+
+  /**
+   * Options
+   *
+   * @var array
+   */
+  private $_options = array();
+
+
+
+  /**
+   * Constructor
+   *
+   * @param array $options
+   */
+  public function __construct( $options = array() )
+  {
+    $this->_options = $options;
+    parent::__construct();
+  }
+
+
+
   /**
    * Format
    *
@@ -18,7 +41,7 @@ class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
    */
   public function format( array $record )
   {
-    $clean_record = \Common\Utils\Arrays::object_to_array( \Doctrine\Common\Util\Debug::export( $record, 5 ) );
+    $clean_record = \Common\Utils\Arrays::object_to_array( \Doctrine\Common\Util\Debug::export( $record, @$this->_options[ 'maxDepth' ] ?: 8 ) );
     return \Common\Utils\Arrays::get_html( $clean_record );
   }
 
