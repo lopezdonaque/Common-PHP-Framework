@@ -72,7 +72,7 @@ class Xml
       }
 
       // Use "@" to ignore "Invalid Element Name" errors
-      @$xml->writeElement( $key, $value ?: '' );
+      @$xml->writeElement( $key, strval( $value ) );
     }
   }
 
