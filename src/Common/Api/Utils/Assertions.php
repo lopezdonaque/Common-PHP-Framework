@@ -29,15 +29,16 @@ class Assertions
 
 
   /**
-   * Check if a mail address is valid
+   * Check if a email address is valid
    *
    * @param string $email
-   * @param string $message in case of invalid
+   * @param string $message
+   * @param int $code
    * @throws \Common\Api\Exception
    */
-  public static function assert_is_valid_email( $email, $message = 'Invalid e-mail' )
+  public static function assert_is_valid_email( $email, $message = 'Invalid e-mail', $code = \Common\Api\ExceptionCodes::GENERAL_INVALID_ARGUMENT )
   {
-    self::assert( filter_var( $email, FILTER_VALIDATE_EMAIL ), $message, \Common\Api\ExceptionCodes::GENERAL_INVALID_ARGUMENT );
+    self::assert( filter_var( $email, FILTER_VALIDATE_EMAIL ), $message, $code );
   }
 
 }
