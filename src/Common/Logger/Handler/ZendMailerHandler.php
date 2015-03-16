@@ -118,7 +118,7 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
         $attachments[] = array
         (
           'filename' => "log_json_{$uid}_{$date}.json",
-          'contents' => json_encode( $record )
+          'contents' => @json_encode( $record )
         );
 
         // Plain attachment
