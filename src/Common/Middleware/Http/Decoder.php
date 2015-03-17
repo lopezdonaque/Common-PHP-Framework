@@ -119,7 +119,7 @@ class Decoder implements \Common\Middleware\Listener
       }
       elseif( $request->httpRequest->get_header( 'Content-length' ) > 0 )
       {
-        if( $request->httpRequest->get_header( 'Content-type' ) == '' )
+        if( $request->httpRequest->get_header( 'Content-type' ) == '' || $request->httpRequest->get_header( 'Content-type', false ) == 'text/plain' )
         {
           // WORKAROUND:
           // IE8/IE9 XDomainRequest will send a content-type of text/plain but a x-www-form-urlencoded data payload
