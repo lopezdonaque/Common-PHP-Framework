@@ -51,11 +51,11 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
 
 
   /**
-   * Defines if the mail must attach the log as an attachment
+   * Attachments config
    *
-   * @var bool
+   * @var array
    */
-  protected $attach_log = true;
+  protected $attachments_config = array();
 
 
 
@@ -67,14 +67,16 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
    * @param string       $from           The sender of the mail
    * @param string       $reply_to       The reply-to of the mail
    * @param integer      $level          The minimum logging level at which this handler will be triggered
+   * @param array        $attachments_config
    */
-  public function __construct( $to, $subject, $from, $reply_to, $level = \Monolog\Logger::ERROR )
+  public function __construct( $to, $subject, $from, $reply_to, $level = \Monolog\Logger::ERROR, $attachments_config = array( 'contents', 'record' ) )
   {
     parent::__construct( $level, true );
     $this->to = is_array( $to ) ? $to : array( $to );
     $this->subject = $subject;
     $this->from = $from;
     $this->reply_to = $reply_to;
+    $this->attachments_config = $attachments_config;
   }
 
 
@@ -108,25 +110,29 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
     foreach( $records as $record )
     {
       $attachments = array();
+      $uid = @$record[ 'extra' ][ 'uid' ] ?: microtime();
+      $date = $record[ 'datetime' ]->format( 'YmdHis' );
 
-      if( $this->attach_log )
+      foreach( $this->attachments_config as $attachment_config )
       {
-        $uid = isset( $record[ 'extra' ][ 'uid' ] ) ? $record[ 'extra' ][ 'uid' ] : microtime();
-        $date = $record[ 'datetime' ]->format( 'YmdHis' );
+        switch( $attachment_config )
+        {
+          case 'contents':
+            $attachments[] = array
+            (
+              'filename' => "log_html_{$uid}_{$date}.html",
+              'contents' => $content
+            );
+            break;
 
-        // Json attachment
-        $attachments[] = array
-        (
-          'filename' => "log_json_{$uid}_{$date}.json",
-          'contents' => @json_encode( $record )
-        );
-
-        // Plain attachment
-        $attachments[] = array
-        (
-          'filename' => "log_html_{$uid}_{$date}.html",
-          'contents' => $content
-        );
+          case 'record':
+            $attachments[] = array
+            (
+              'filename' => "log_json_{$uid}_{$date}.json",
+              'contents' => @json_encode( $record )
+            );
+            break;
+        }
       }
 
       \Common\Utils\Mail::send( array
@@ -141,4 +147,5 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
       ));
     }
   }
+
 }
