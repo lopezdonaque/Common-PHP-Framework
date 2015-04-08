@@ -47,9 +47,9 @@ class Server
 
 
   /**
-   * Get the remote address IP, even behind proxies
+   * Get the remote address IP, even behind proxies (REMOTE_ADDR if not proxied)
    *
-   * @return string the detected IP (REMOTE_ADDR if not proxied)
+   * @return string
    */
   public static function get_remote_ip()
   {
@@ -58,39 +58,35 @@ class Server
       return '127.0.0.1';
     }
 
-    if( self::_validip( self::_get_server_value("HTTP_CLIENT_IP") ) )
+    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_CLIENT_IP' ) ) )
     {
-      return self::_get_server_value("HTTP_CLIENT_IP");
+      return self::_get_server_value( 'HTTP_CLIENT_IP' );
     }
 
-    foreach( explode( ",", self::_get_server_value("HTTP_X_FORWARDED_FOR") ) as $ip )
+    foreach( explode( ',', self::_get_server_value( 'HTTP_X_FORWARDED_FOR' ) ) as $ip )
     {
-      if( self::_validip( trim( $ip ) ) )
+      if( self::_is_valid_ip( trim( $ip ) ) )
       {
         return $ip;
       }
     }
 
-    if( self::_validip( self::_get_server_value("HTTP_X_FORWARDED") ) )
+    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_X_FORWARDED' ) ) )
     {
-      return self::_get_server_value("HTTP_X_FORWARDED");
+      return self::_get_server_value( 'HTTP_X_FORWARDED' );
     }
-    elseif( self::_validip( self::_get_server_value("HTTP_FORWARDED_FOR") ) )
+
+    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_FORWARDED_FOR' ) ) )
     {
-      return self::_get_server_value("HTTP_FORWARDED_FOR");
+      return self::_get_server_value( 'HTTP_FORWARDED_FOR' );
     }
-    elseif( self::_validip( self::_get_server_value("HTTP_FORWARDED") ) )
+
+    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_FORWARDED' ) ) )
     {
-      return self::_get_server_value("HTTP_FORWARDED");
+      return self::_get_server_value( 'HTTP_FORWARDED' );
     }
-    elseif( self::_validip( self::_get_server_value("HTTP_X_FORWARDED") ) )
-    {
-      return self::_get_server_value("HTTP_X_FORWARDED");
-    }
-    else
-    {
-      return self::_get_server_value("REMOTE_ADDR");
-    }
+
+    return self::_get_server_value( 'REMOTE_ADDR' );
   }
 
 
@@ -101,7 +97,7 @@ class Server
    * @param string $ip
    * @return bool
    */
-  private static function _validip( $ip )
+  private static function _is_valid_ip( $ip )
   {
     if( !empty( $ip ) && ip2long( $ip ) != -1 )
     {
