@@ -18,7 +18,7 @@ class Cookies
    */
   public static function get( $name )
   {
-    if( ! isset( $_COOKIE[ $name ] ) )
+    if( !isset( $_COOKIE[ $name ] ) )
     {
       return false;
     }

@@ -76,7 +76,7 @@ class Response
       }
     }
 
-    if( $header_value && ! $with_arguments )
+    if( $header_value && !$with_arguments )
     {
       list( $header_value, ) = explode( ';', $header_value, 2 );
     }
