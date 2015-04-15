@@ -28,13 +28,13 @@ class Ftp
     $local_filename = $filename;
 
     // Try to connect to FTP
-    if( ! ( $conn_id = ftp_connect( $server, 21 ) ) )
+    if( ( $conn_id = ftp_connect( $server, 21 ) ) === false )
     {
       throw new \Exception( "Couldn't connect to " . $server );
     }
 
     // Try to login
-    if( ! ftp_login( $conn_id, $user, $password ) )
+    if( !ftp_login( $conn_id, $user, $password ) )
     {
       throw new \Exception( sprintf( "Could not connect to %s as %s", $server, $user ) );
     }
@@ -43,29 +43,29 @@ class Ftp
     ftp_pasv( $conn_id, true );
 
     // Change FTP dir
-    if( ! @ftp_chdir( $conn_id, $dir ) )
+    if( !@ftp_chdir( $conn_id, $dir ) )
     {
       throw new \Exception( sprintf( "Could not find FTP dir %s", $dir ) );
     }
 
     // Retrieve remote file from the FTP server, and saves it into a local file
-    if( ! @ftp_get( $conn_id, $local_filename, $filename, FTP_ASCII ) )
+    if( !@ftp_get( $conn_id, $local_filename, $filename, FTP_ASCII ) )
     {
       throw new \Exception( 'File not exists in remote server:' . $filename );
     }
 
     // Check if local file exists
-    if( ! file_exists( $local_filename ) )
+    if( !file_exists( $local_filename ) )
     {
       throw new \Exception( 'File not exists in local server:' . $local_filename );
     }
 
-    if( ! ( $contents = @file_get_contents( $local_filename ) ) )
+    if( !( $contents = @file_get_contents( $local_filename ) ) )
     {
       throw new \Exception( 'Unable to get local file contents:' . $local_filename );
     }
 
-    if( ! unlink( $local_filename ) )
+    if( !unlink( $local_filename ) )
     {
       throw new \Exception( 'Unable to delete local file:' . $local_filename );
     }
@@ -84,19 +84,19 @@ class Ftp
    * @param string $password
    * @param string $dir
    * @param string $pattern
-   * @return string[string]
+   * @return array
    * @throws \Exception
    */
   public static function get_all_file_contents_from_ftp_directory( $server, $user, $password, $dir, $pattern )
   {
     // Try to connect to FTP
-    if( ! ( $conn_id = ftp_connect( $server, 21 ) ) )
+    if( ( $conn_id = ftp_connect( $server, 21 ) ) === false )
     {
       throw new \Exception( "Couldn't connect to " . $server );
     }
 
     // Try to login
-    if( ! ftp_login( $conn_id, $user, $password ) )
+    if( !ftp_login( $conn_id, $user, $password ) )
     {
       throw new \Exception( sprintf( "Could not connect to %s as %s", $server, $user ) );
     }
@@ -105,13 +105,13 @@ class Ftp
     ftp_pasv( $conn_id, true );
 
     // Change FTP dir
-    if( ! @ftp_chdir( $conn_id, $dir ) )
+    if( !@ftp_chdir( $conn_id, $dir ) )
     {
       throw new \Exception( sprintf( "Could not find FTP dir %s", $dir ) );
     }
 
     // Get files list from directory
-    if( ! ( $dir_files_list = @ftp_nlist( $conn_id, "." ) ) )
+    if( ( $dir_files_list = @ftp_nlist( $conn_id, "." ) ) === false )
     {
       throw new \Exception( 'Unable to get file list from dir:' . $dir );
     }
@@ -124,23 +124,23 @@ class Ftp
       if( preg_match( $pattern, $dir_file ) )
       {
         // If name matches, retrieve remote file from the FTP server, and saves it into a local file
-        if( ! @ftp_get( $conn_id, $dir_file, $dir_file, FTP_ASCII ) )
+        if( !@ftp_get( $conn_id, $dir_file, $dir_file, FTP_ASCII ) )
         {
           throw new \Exception( 'File not exists in remote server:' . $dir_file );
         }
 
         // Check if local file exists
-        if( ! file_exists( $dir_file ) )
+        if( !file_exists( $dir_file ) )
         {
           throw new \Exception( 'File not exists in local server:' . $dir_file );
         }
 
-        if( ! ( $contents = @file_get_contents( $dir_file ) ) )
+        if( !( $contents = @file_get_contents( $dir_file ) ) )
         {
           throw new \Exception( 'Unable to get local file contents:' . $dir_file );
         }
 
-        if( ! unlink( $dir_file ) )
+        if( !unlink( $dir_file ) )
         {
           throw new \Exception( 'Unable to delete local file:' . $dir_file );
         }
@@ -173,19 +173,19 @@ class Ftp
   {
     $temp_file_name = tempnam( sys_get_temp_dir(), 'upload' );
 
-    if( ! file_put_contents( $temp_file_name, $contents ) )
+    if( !file_put_contents( $temp_file_name, $contents ) )
     {
       throw new \Exception( 'Unable to put file contents into temp file' );
     }
 
     // Connect to ftp
-    if( ! ( $conn_id = ftp_connect( $server, 21 ) ) )
+    if( ( $conn_id = ftp_connect( $server, 21 ) ) === false )
     {
       throw new \Exception( 'Could not connect to ' . $server );
     }
 
     // Try to login
-    if( ! ftp_login( $conn_id, $user, $password ) )
+    if( !ftp_login( $conn_id, $user, $password ) )
     {
       throw new \Exception( sprintf( "Could not connect to %s as %s", $server, $user ) );
     }
@@ -194,18 +194,18 @@ class Ftp
     ftp_pasv( $conn_id, true );
 
     // Change FTP dir
-    if( ! ftp_chdir( $conn_id, $dir ) )
+    if( !ftp_chdir( $conn_id, $dir ) )
     {
       throw new \Exception( sprintf( "Could not find FTP dir %s", $dir ) );
     }
 
     // Send file to ftp
-    if( ! ftp_put( $conn_id, $filename, $temp_file_name, FTP_ASCII ) )
+    if( !ftp_put( $conn_id, $filename, $temp_file_name, FTP_ASCII ) )
     {
       throw new \Exception( 'Unable to send file to ftp' );
     }
 
-    if( ! unlink( $temp_file_name ) )
+    if( !unlink( $temp_file_name ) )
     {
       throw new \Exception( 'Unable to delete local temp file:' . $temp_file_name );
     }
