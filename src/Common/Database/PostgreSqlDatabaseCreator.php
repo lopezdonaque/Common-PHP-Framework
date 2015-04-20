@@ -45,28 +45,16 @@ class PostgreSqlDatabaseCreator
     }
 
     // Execute create database
-    if( !$this->_createdb() )
-    {
-      return false;
-    }
+    $this->_createdb();
 
     // Install procedural languages
-    if( !$this->_create_langs() )
-    {
-      return false;
-    }
+    $this->_create_langs();
 
     // Execute SQL scripts
-    if( !$this->_execute_sql_scripts() )
-    {
-      return false;
-    }
+    $this->_execute_sql_scripts();
 
     // Execute fixtures
-    if( !$this->_execute_fixtures() )
-    {
-      return false;
-    }
+    $this->_execute_fixtures();
 
     return true;
   }
@@ -75,8 +63,6 @@ class PostgreSqlDatabaseCreator
 
   /**
    * Executes the createdb command to create database
-   *
-   * @return bool
    */
   private function _createdb()
   {
@@ -109,32 +95,20 @@ class PostgreSqlDatabaseCreator
 
     $arguments .= " -E utf8 -T " . $this->config->template . " " . $this->config->dbname . " 2>&1";
 
-    if( !$this->_execute_db_command( 'createdb', $arguments ) )
-    {
-      return false;
-    }
-
-    return true;
+    $this->_execute_db_command( 'createdb', $arguments );
   }
 
 
 
   /**
    * Install procedural languages on database
-   *
-   * @return bool
    */
   private function _create_langs()
   {
     foreach( $this->config->procedural_languages as $lang )
     {
-      if( !$this->_execute_createlang_command( $lang ) )
-      {
-        return false;
-      }
+      $this->_execute_createlang_command( $lang );
     }
-
-    return true;
   }
 
 
@@ -143,7 +117,6 @@ class PostgreSqlDatabaseCreator
    * Executes the createlang command to install procedural language on database
    *
    * @param string $lang
-   * @return bool
    */
   private function _execute_createlang_command( $lang )
   {
@@ -166,54 +139,34 @@ class PostgreSqlDatabaseCreator
 
     $arguments .= " $lang " . $this->config->dbname . " 2>&1";
 
-    if( !$this->_execute_db_command( 'createlang', $arguments ) )
-    {
-      return false;
-    }
-
-    return true;
+    $this->_execute_db_command( 'createlang', $arguments );
   }
 
 
 
   /**
    * Executes the SQL scripts
-   *
-   * @return bool
    */
   private function _execute_sql_scripts()
   {
     foreach( $this->config->sql_scripts as $script )
     {
-      if( !$this->_execute_sql_script( $script ) )
-      {
-        return false;
-      }
+      $this->_execute_sql_script( $script );
     }
-
-    return true;
   }
 
 
 
   /**
    * Executes the fixtures
-   *
-   * @return bool
    */
   private function _execute_fixtures()
   {
     foreach( $this->config->fixtures as $file )
     {
       $method = ( pathinfo( $file, PATHINFO_EXTENSION ) == 'sql' ) ? '_execute_sql_script' : '_add_data';
-
-      if( !$this->$method( $file ) )
-      {
-        return false;
-      }
+      $this->$method( $file );
     }
-
-    return true;
   }
 
 
@@ -221,16 +174,18 @@ class PostgreSqlDatabaseCreator
   /**
    * Executes a SQL script
    *
-   * @param string $filename
-   * @return bool
+   * @param string $script
    * @throws \Common\Database\PostgreSqlDatabaseCreatorException
    */
-  private function _execute_sql_script( $filename )
+  private function _execute_sql_script( $script )
   {
-    // Check if the script exists
-    if( !file_exists( $filename ) )
+    // Check if it's SQL file or code
+    $is_sql_file = ( substr( $script, -4, 4 ) == '.sql' );
+
+    // Check if it's a filename and exists
+    if( $is_sql_file && !file_exists( $script ) )
     {
-      throw new PostgreSqlDatabaseCreatorException( 'SQL script not found in: ' . $filename );
+      throw new PostgreSqlDatabaseCreatorException( "SQL script not found [$script]" );
     }
 
     $arguments = '';
@@ -250,18 +205,31 @@ class PostgreSqlDatabaseCreator
       $arguments .= " -U " . $this->config->user;
     }
 
-    $arguments .= " -d " . $this->config->dbname . " -f " . $filename . " 2>&1";
+    $arguments .= " -d " . $this->config->dbname;
 
-    // Set the script path as current path to allow execute other scripts from the master db_script ("\i other.sql")
-    $oldcwd = getcwd();
-    chdir( dirname( $filename ) );
-
-    if( !$this->_execute_db_command( 'psql', $arguments, $oldcwd ) )
+    if( $is_sql_file )
     {
-      return false;
+      $arguments .= " -f " . $script;
+    }
+    else
+    {
+      $arguments .= " -c " . $script;
     }
 
-    return true;
+    $arguments .= " 2>&1";
+
+    // Set the script path as current path to allow execute other scripts from the master db_script ("\i other.sql")
+    if( $is_sql_file )
+    {
+      $oldcwd = getcwd();
+      chdir( dirname( $script ) );
+      $this->_execute_db_command( 'psql', $arguments );
+      chdir( $oldcwd );
+    }
+    else
+    {
+      $this->_execute_db_command( 'psql', $arguments );
+    }
   }
 
 
@@ -284,7 +252,6 @@ class PostgreSqlDatabaseCreator
    * Adds fixtures data
    *
    * @param string $file
-   * @return bool
    * @throws \Common\Database\PostgreSqlDatabaseCreatorException
    */
   private function _add_data( $file )
@@ -325,7 +292,6 @@ class PostgreSqlDatabaseCreator
     }
 
     $pdo = null;
-    return true;
   }
 
 
@@ -399,11 +365,9 @@ class PostgreSqlDatabaseCreator
    *
    * @param string $command
    * @param string $arguments
-   * @param string $oldcwd Optional directory to go back to after executing (to relocate current dir)
-   * @return bool
    * @throws \Common\Database\PostgreSqlDatabaseCreatorException
    */
-  private function _execute_db_command( $command, $arguments, $oldcwd = null )
+  private function _execute_db_command( $command, $arguments )
   {
     if( $this->config->db_installation_path )
     {
@@ -430,13 +394,6 @@ class PostgreSqlDatabaseCreator
     {
       throw new PostgreSqlDatabaseCreatorException( $result_message );
     }
-
-    if( $oldcwd != null )
-    {
-      chdir( $oldcwd );
-    }
-
-    return true;
   }
 
 }

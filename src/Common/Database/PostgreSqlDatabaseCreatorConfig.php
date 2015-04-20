@@ -75,7 +75,7 @@ class PostgreSqlDatabaseCreatorConfig
 
 
   /**
-   * Database scripts (sql files which will be executed)
+   * Database scripts (SQL files or SQL code which will be executed)
    *
    * @var array
    */
