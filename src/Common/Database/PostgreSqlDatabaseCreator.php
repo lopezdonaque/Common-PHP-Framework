@@ -213,7 +213,7 @@ class PostgreSqlDatabaseCreator
     }
     else
     {
-      $arguments .= " -c " . $script;
+      $arguments .= ' -c "' . $script . '"';
     }
 
     $arguments .= " 2>&1";
