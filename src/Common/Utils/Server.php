@@ -58,30 +58,30 @@ class Server
       return '127.0.0.1';
     }
 
-    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_CLIENT_IP' ) ) )
+    if( self::_is_valid_public_ip( self::_get_server_value( 'HTTP_CLIENT_IP' ) ) )
     {
       return self::_get_server_value( 'HTTP_CLIENT_IP' );
     }
 
     foreach( explode( ',', self::_get_server_value( 'HTTP_X_FORWARDED_FOR' ) ) as $ip )
     {
-      if( self::_is_valid_ip( trim( $ip ) ) )
+      if( self::_is_valid_public_ip( trim( $ip ) ) )
       {
         return $ip;
       }
     }
 
-    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_X_FORWARDED' ) ) )
+    if( self::_is_valid_public_ip( self::_get_server_value( 'HTTP_X_FORWARDED' ) ) )
     {
       return self::_get_server_value( 'HTTP_X_FORWARDED' );
     }
 
-    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_FORWARDED_FOR' ) ) )
+    if( self::_is_valid_public_ip( self::_get_server_value( 'HTTP_FORWARDED_FOR' ) ) )
     {
       return self::_get_server_value( 'HTTP_FORWARDED_FOR' );
     }
 
-    if( self::_is_valid_ip( self::_get_server_value( 'HTTP_FORWARDED' ) ) )
+    if( self::_is_valid_public_ip( self::_get_server_value( 'HTTP_FORWARDED' ) ) )
     {
       return self::_get_server_value( 'HTTP_FORWARDED' );
     }
@@ -97,7 +97,7 @@ class Server
    * @param string $ip
    * @return bool
    */
-  private static function _is_valid_ip( $ip )
+  private static function _is_valid_public_ip( $ip )
   {
     if( !empty( $ip ) && ip2long( $ip ) != -1 )
     {
