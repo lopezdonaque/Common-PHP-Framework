@@ -28,14 +28,14 @@ class ApiValidator implements \Common\Middleware\Listener
     // Check if api class exists
     if( !class_exists( $api_name, true ) )
     {
-      $response->api_exception = new \Common\Api\Exception( "API {$request->api_entity} not found", \Common\Api\ExceptionCodes::CALL_ENTITY_NOT_FOUND );
+      $response->api_exception = new \Common\Api\Exception( "API [{$request->api_entity}] not found", \Common\Api\ExceptionCodes::CALL_ENTITY_NOT_FOUND );
       return;
     }
 
     // Check if method exists
     if( !method_exists( $api_name, $request->api_method ) )
     {
-      $response->api_exception = new \Common\Api\Exception( "Method {$request->api_method} of API {$request->api_entity} not found", \Common\Api\ExceptionCodes::CALL_METHOD_NOT_FOUND );
+      $response->api_exception = new \Common\Api\Exception( "Method [{$request->api_method}] of API [{$request->api_entity}] not found", \Common\Api\ExceptionCodes::CALL_METHOD_NOT_FOUND );
       return;
     }
 
@@ -43,7 +43,7 @@ class ApiValidator implements \Common\Middleware\Listener
     $method_reflection = new \ReflectionMethod( $api_name, $request->api_method );
     if( count( $request->api_arguments ) < $method_reflection->getNumberOfRequiredParameters() )
     {
-      $response->api_exception = new \Common\Api\Exception( "Wrong number of required arguments for method {$request->api_method} of API {$request->api_entity}.", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
+      $response->api_exception = new \Common\Api\Exception( "Wrong number of required arguments for method [{$request->api_method}] of API [{$request->api_entity}].", \Common\Api\ExceptionCodes::CALL_MISSING_ARGUMENTS );
       return;
     }
   }

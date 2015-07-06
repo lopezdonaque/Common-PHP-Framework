@@ -254,7 +254,7 @@ class Server
       // Check if method exists
       if( !method_exists( $api, $this->_method ) )
       {
-        $this->response( new Exception( "Method $this->_method of API {$this->_entity} not found", ExceptionCodes::CALL_METHOD_NOT_FOUND ) );
+        $this->response( new Exception( "Method [$this->_method] of API [{$this->_entity}] not found", ExceptionCodes::CALL_METHOD_NOT_FOUND ) );
       }
 
       $result = call_user_func_array( array( $api, $this->_method ), $args );
