@@ -6,6 +6,9 @@ namespace Common\Orm\Doctrine;
 /**
  * Timestamp type
  *
+ * PHP: int as timestamp
+ * Database: timestamp
+ *
  */
 class TimestampType extends \Doctrine\DBAL\Types\DateTimeType
 {
