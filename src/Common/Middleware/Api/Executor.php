@@ -36,15 +36,10 @@ class Executor implements \Common\Middleware\Listener
       $response->api_real_exception = $e;
       $response->api_exception = $e;
     }
-    catch( \PDOException $e )
+    catch( \Exception $e ) // Any other exception must return an internal error (with a unique id to identify it)
     {
       $response->api_real_exception = $e;
-      $response->api_exception = new \Common\Api\Exception( 'Database error', \Common\Api\ExceptionCodes::GENERAL_DATABASE_EXCEPTION );
-    }
-    catch( \Exception $e ) // Any other exception must be return an internal error
-    {
-      $response->api_real_exception = $e;
-      $response->api_exception = new \Common\Api\Exception( 'Internal error', \Common\Api\ExceptionCodes::GENERAL_INTERNAL_ERROR );
+      $response->api_exception = new \Common\Api\Exception( 'Internal error - ' . uniqid(), \Common\Api\ExceptionCodes::GENERAL_INTERNAL_ERROR );
     }
 
     $response->api_executed = true;
