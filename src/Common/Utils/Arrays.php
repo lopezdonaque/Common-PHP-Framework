@@ -170,7 +170,7 @@ class Arrays
         foreach( $array as $k => $v )
         {
           $text .= '<tr>';
-          $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold; cursor: pointer;" onclick="this.nextSibling.style.display = ( this.nextSibling.style.display == \'none\' ) ? \'\' : \'none\';">' . htmlentities( $k ) . '</td>';
+          $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold; cursor: pointer;" onclick="this.nextSibling.style.display = ( this.nextSibling.style.display == \'none\' ) ? \'\' : \'none\';">' . htmlentities( $k, null, ini_get( 'default_charset' ) ) . '</td>';
           $text .= '<td>' . self::get_html( $v ) . '</td>';
           $text .= '</tr>';
         }
@@ -182,7 +182,7 @@ class Arrays
 
     if( is_string( $array ) )
     {
-      return htmlentities( $array );
+      return htmlentities( $array, null, ini_get( 'default_charset' ) );
     }
 
     return $array;
