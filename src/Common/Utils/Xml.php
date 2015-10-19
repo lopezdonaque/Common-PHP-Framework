@@ -138,7 +138,7 @@ class Xml
   {
     libxml_use_internal_errors( true );
 
-    if( !( $doc = simplexml_load_string( $xml_str ) ) )
+    if( ( $doc = simplexml_load_string( $xml_str ) ) === false )
     {
       $errors = array_map( function( $error ){ return $error->message; }, libxml_get_errors() );
       libxml_clear_errors();
