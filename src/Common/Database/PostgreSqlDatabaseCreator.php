@@ -41,7 +41,7 @@ class PostgreSqlDatabaseCreator
   {
     if( $this->config->dropdb && $this->exists_database() )
     {
-      $this->_execute_db_command( 'dropdb', $this->config->dbname );
+      $this->_dropdb();
     }
 
     // Execute create database
@@ -57,6 +57,40 @@ class PostgreSqlDatabaseCreator
     $this->_execute_fixtures();
 
     return true;
+  }
+
+
+
+  /**
+   * Executes the dropdb command to delete database
+   */
+  private function _dropdb()
+  {
+    $arguments = '';
+
+    if( $this->config->host )
+    {
+      $arguments .= '-h ' . $this->config->host;
+    }
+
+    if( $this->config->port )
+    {
+      $arguments .= ' -p ' . $this->config->port;
+    }
+
+    if( $this->config->user )
+    {
+      $arguments .= ' -U ' . $this->config->user;
+    }
+
+    if( $this->config->owner )
+    {
+      $arguments .= ' -O ' . $this->config->owner;
+    }
+
+    $arguments .= " " . $this->config->dbname . " 2>&1";
+
+    $this->_execute_db_command( 'dropdb', $arguments );
   }
 
 
