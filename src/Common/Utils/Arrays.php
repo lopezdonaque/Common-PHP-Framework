@@ -147,9 +147,10 @@ class Arrays
    * Returns an array as a html table
    *
    * @param array $array
+   * @param bool $linkify
    * @return array|string
    */
-  public static function get_html( $array )
+  public static function get_html( $array, $linkify = false )
   {
     $text = '';
 
@@ -182,7 +183,14 @@ class Arrays
 
     if( is_string( $array ) )
     {
-      return htmlentities( $array, null, ini_get( 'default_charset' ) );
+      $value = htmlentities( $array, null, ini_get( 'default_charset' ) );
+
+      if( $linkify && substr( $array, 0, 4 ) == 'http' )
+      {
+        return '<a href="' . $array . '">' . $value . '</a>';
+      }
+
+      return $value;
     }
 
     return $array;
