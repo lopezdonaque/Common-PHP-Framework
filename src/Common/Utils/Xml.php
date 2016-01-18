@@ -18,6 +18,7 @@ class Xml
    * @param string $start_element
    * @param string $numeric_index_prefix
    * @return string
+   * @throws \Exception
    */
   public static function get_xml_from_mixed_array( $array, $start_element = 'root', $numeric_index_prefix = 'item_' )
   {
@@ -27,7 +28,15 @@ class Xml
     $xml->startElement( $start_element );
     self::_write( $xml, $array, $numeric_index_prefix );
     $xml->endElement();
-    return $xml->outputMemory( true );
+
+    $xml_string = $xml->outputMemory( true );
+
+    if( !self::is_valid_xml( $xml_string, $errors ) )
+    {
+      throw new \Exception( "Invalid generated XML [$xml_string] [{$errors[0]}]" );
+    }
+
+    return $xml_string;
   }
 
 
@@ -143,7 +152,7 @@ class Xml
 
     if( !empty( $errors ) )
     {
-      $errors = array_map( function( $error ){ return $error->message; }, $errors );
+      $errors = array_map( function( $error ){ return trim( $error->message ); }, $errors );
       libxml_clear_errors();
       $is_valid = false;
     }
