@@ -137,15 +137,19 @@ class Xml
   public static function is_valid_xml( $xml_str, &$errors = null )
   {
     libxml_use_internal_errors( true );
+    $is_valid = true;
+    simplexml_load_string( $xml_str );
+    $errors = libxml_get_errors();
 
-    if( ( $doc = simplexml_load_string( $xml_str ) ) === false )
+    if( !empty( $errors ) )
     {
-      $errors = array_map( function( $error ){ return $error->message; }, libxml_get_errors() );
+      $errors = array_map( function( $error ){ return $error->message; }, $errors );
       libxml_clear_errors();
-      return false;
+      $is_valid = false;
     }
 
-    return true;
+    libxml_use_internal_errors( false );
+    return $is_valid;
   }
 
 }
