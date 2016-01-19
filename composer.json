@@ -27,7 +27,7 @@
     "zendframework/zend-file": "2.*",
     "zendframework/zend-mail": "2.*",
     "monolog/monolog": "1.*",
-    "doctrine/common": "*"
+    "doctrine/common": "2.3.*"
   },
   "suggest":
   {
