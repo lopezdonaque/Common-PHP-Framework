@@ -7,7 +7,7 @@ namespace Common\Utils;
  * Class to manage string methods
  *
  */
-class String
+class Strings
 {
 
   /**
@@ -161,7 +161,7 @@ class String
    * Parse template text and return formatted text
    *
    * For example:
-   * $html = \Common\Utils\String::parse_template( '<span>{name}</span>', array( 'name' => $enduser_name ) );
+   * $html = \Common\Utils\Strings::parse_template( '<span>{name}</span>', array( 'name' => $enduser_name ) );
    *
    * @param string $text
    * @param string[string] $data
