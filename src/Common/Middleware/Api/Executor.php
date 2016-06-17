@@ -24,7 +24,7 @@ class Executor implements \Common\Middleware\Listener
     }
 
     $api_name = $request->api_class_name;
-    $starttime = time();
+    $starttime = microtime( true );
 
     try
     {
@@ -43,7 +43,7 @@ class Executor implements \Common\Middleware\Listener
     }
 
     $response->api_executed = true;
-    $response->api_execution_time = time() - $starttime;
+    $response->api_execution_time = round( microtime( true ) - $starttime, 2 );
   }
 
 
