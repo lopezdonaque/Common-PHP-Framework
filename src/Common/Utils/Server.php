@@ -17,7 +17,7 @@ class Server
    */
   public static function is_https()
   {
-    return ( isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] == 'on' );
+    return ( @$_SERVER[ 'HTTPS' ] == 'on' );
   }
 
 
@@ -36,12 +36,18 @@ class Server
 
   /**
    * Returns navigation protocol string, with leader :// ("http://" or "https://")
+   * If it's a cli request returns https by default.
    *
    * @return string
    */
   public static function get_protocol()
   {
-    return ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ? 'https://' : 'http://';
+    if( !isset( $_SERVER[ 'HTTPS' ] ) )
+    {
+      return 'https://';
+    }
+
+    return ( $_SERVER[ 'HTTPS' ] == 'on' ) ? 'https://' : 'http://';
   }
 
 
@@ -142,12 +148,7 @@ class Server
    */
   private static function _get_server_value( $name )
   {
-    if( !isset( $_SERVER[ $name ] ) )
-    {
-      return null;
-    }
-
-    return $_SERVER[ $name ];
+    return @$_SERVER[ $name ] ?: null;
   }
 
 }
