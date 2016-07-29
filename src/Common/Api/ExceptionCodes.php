@@ -30,6 +30,9 @@ class ExceptionCodes
 
   /** Data already exists */
   const GENERAL_DATA_ALREADY_EXISTS = 5;
+
+  /** Denied access */
+  const GENERAL_DENIED_ACCESS = 6;
   /**#@-*/
 
 
