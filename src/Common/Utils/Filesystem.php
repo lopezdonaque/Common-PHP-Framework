@@ -27,6 +27,7 @@ class Filesystem
    * @param string $needle
    * @param string $top
    * @return string
+   * @throws \Exception
    */
   public static function filefind( $basedirectory, $needle, $top = null )
   {
@@ -47,7 +48,10 @@ class Filesystem
       self::$_filefind_cache[$top] = array();
     }
 
-    $handle = opendir( $basedirectory );
+    if( ( $handle = opendir( $basedirectory ) ) === false )
+    {
+      throw new \Exception( "Unable to open dir [$basedirectory]" );
+    }
 
     while( ( $file = readdir( $handle ) ) )
     {
