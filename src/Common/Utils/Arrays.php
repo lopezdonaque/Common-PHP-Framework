@@ -172,7 +172,7 @@ class Arrays
         {
           $text .= '<tr>';
           $text .= '<td style="width: 40px; background-color: #F0F0F0; vertical-align: top; font-weight: bold; cursor: pointer;" onclick="this.nextSibling.style.display = ( this.nextSibling.style.display == \'none\' ) ? \'\' : \'none\';">' . htmlentities( $k, null, ini_get( 'default_charset' ) ) . '</td>';
-          $text .= '<td>' . self::get_html( $v ) . '</td>';
+          $text .= '<td>' . self::get_html( $v, $linkify ) . '</td>';
           $text .= '</tr>';
         }
       }
