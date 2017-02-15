@@ -35,19 +35,13 @@ class Server
 
 
   /**
-   * Returns navigation protocol string, with leader :// ("http://" or "https://")
-   * If it's a cli request returns https by default.
+   * Returns request protocol string, with leader "://" ("http://" or "https://")
    *
    * @return string
    */
   public static function get_protocol()
   {
-    if( !isset( $_SERVER[ 'HTTPS' ] ) )
-    {
-      return 'https://';
-    }
-
-    return ( $_SERVER[ 'HTTPS' ] == 'on' ) ? 'https://' : 'http://';
+    return self::is_https() ? 'https://' : 'http://';
   }
 
 
