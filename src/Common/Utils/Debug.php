@@ -85,6 +85,7 @@ class Debug
       '$_GET' => $_GET,
       '$_POST' => $_POST,
       '$_COOKIE' => $_COOKIE,
+      '$_FILES' => $_FILES,
       '$_SESSION' => isset( $_SESSION ) ? $_SESSION : array(),
       '$_SERVER' => $_SERVER
     );
