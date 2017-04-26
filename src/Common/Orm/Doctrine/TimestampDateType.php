@@ -49,12 +49,16 @@ class TimestampDateType extends \Doctrine\DBAL\Types\DateType
    * @param int $value
    * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
    * @return string
+   * @throws \Exception
    */
   public function convertToDatabaseValue( $value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform )
   {
     if( $value )
     {
-      $value = \DateTime::createFromFormat( 'U', $value );
+      if( ( $value = \DateTime::createFromFormat( 'U', $value ) ) === false )
+      {
+        throw new \Exception( "Wrong timestamp value [$value]" );
+      }
     }
 
     return parent::convertToDatabaseValue( $value, $platform );
