@@ -57,15 +57,17 @@ class TimestampNType extends \Doctrine\DBAL\Types\DateTimeType
    */
   public function convertToDatabaseValue( $value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform )
   {
-    if( $value )
+    if( !$value )
     {
-      if( ( $value = \DateTime::createFromFormat( is_float( $value ) ? 'U.u' : 'U', $value ) ) === false )
-      {
-        throw new \Exception( "Wrong timestamp value [$value]" );
-      }
+      return null;
     }
 
-    return ( $value !== null ) ? $value->format( 'Y-m-d H:i:s.u' ) : null;
+    if( ( $datetime = \DateTime::createFromFormat( is_float( $value ) ? 'U.u' : 'U', $value ) ) === false )
+    {
+      throw new \Exception( "Unable to create datetime from value [$value]" );
+    }
+
+    return $datetime->format( 'Y-m-d H:i:s.u' );
   }
 
 
