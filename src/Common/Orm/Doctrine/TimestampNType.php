@@ -62,9 +62,11 @@ class TimestampNType extends \Doctrine\DBAL\Types\DateTimeType
       return null;
     }
 
-    if( ( $datetime = \DateTime::createFromFormat( is_float( $value ) ? 'U.u' : 'U', $value ) ) === false )
+    $is_float = is_float( $value ) || is_numeric( $value ) && ( (float) $value != (int) $value );
+
+    if( ( $datetime = \DateTime::createFromFormat( $is_float ? 'U.u' : 'U', $value ) ) === false )
     {
-      throw new \Exception( "Unable to create datetime from value [$value]" );
+      throw new \Exception( "Unable to create datetime from value [$value]", \DateTime::getLastErrors() );
     }
 
     return $datetime->format( 'Y-m-d H:i:s.u' );
