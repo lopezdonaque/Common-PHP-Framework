@@ -66,7 +66,7 @@ class TimestampNType extends \Doctrine\DBAL\Types\DateTimeType
 
     if( ( $datetime = \DateTime::createFromFormat( $is_float ? 'U.u' : 'U', $value ) ) === false )
     {
-      throw new \Exception( "Unable to create datetime from value [$value]", \DateTime::getLastErrors() );
+      throw new \Exception( "Unable to create datetime from value [$value]" );
     }
 
     return $datetime->format( 'Y-m-d H:i:s.u' );
