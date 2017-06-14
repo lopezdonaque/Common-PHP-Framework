@@ -64,18 +64,24 @@ class Xml
         $key = 'empty_' . date( 'YmdHis' ) . '_' . mt_rand( 10000, 99999 );
       }
 
-      if( is_array( $value ) )
+      if( is_array( $value ) || is_object( $value ) )
       {
-        $xml->startElement( $key );
-        self::_write( $xml, $value, $numeric_index_prefix );
-        $xml->endElement();
-        continue;
-      }
+        // Start element checking if the key is valid
+        if( @$xml->startElement( $key ) === false )
+        {
+          $key = 'wrong_key_' . date( 'YmdHis' ) . '_' . mt_rand( 10000, 99999 );
+          $xml->startElement( $key );
+        }
 
-      if( is_object( $value ) )
-      {
-        $xml->startElement( $key );
-        self::_write( $xml, \Common\Utils\Arrays::object_to_array( $value ), $numeric_index_prefix );
+        if( is_array( $value ) )
+        {
+          self::_write( $xml, $value, $numeric_index_prefix );
+        }
+        else
+        {
+          self::_write( $xml, \Common\Utils\Arrays::object_to_array( $value ), $numeric_index_prefix );
+        }
+
         $xml->endElement();
         continue;
       }
