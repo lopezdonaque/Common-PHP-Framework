@@ -41,6 +41,12 @@ class Server
    */
   public static function get_protocol()
   {
+    // If PHP script is not running from webserver return https as default
+    if( !isset( $_SERVER[ 'HTTP_HOST' ] ) )
+    {
+      return 'https://';
+    }
+
     return self::is_https() ? 'https://' : 'http://';
   }
 
