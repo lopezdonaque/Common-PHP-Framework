@@ -63,10 +63,11 @@ class TimestampNType extends \Doctrine\DBAL\Types\DateTimeType
     }
 
     $is_float = is_float( $value ) || is_numeric( $value ) && ( (float) $value != (int) $value );
+    $is_float_string = $is_float ? 'true' : 'false';
 
     if( ( $datetime = \DateTime::createFromFormat( $is_float ? 'U.u' : 'U', $value ) ) === false )
     {
-      throw new \Exception( "Unable to create datetime from value [$value]" );
+      throw new \Exception( "Unable to create datetime from value [$value] [is_float = $is_float_string]" );
     }
 
     return $datetime->format( 'Y-m-d H:i:s.u' );
