@@ -13,7 +13,7 @@ class Assertions
   /**
    * Check an assertion, throw an error if it fails
    *
-   * @param boolean $assertion
+   * @param mixed $assertion
    * @param string $message
    * @param integer $code
    * @throws \Common\Api\Exception
