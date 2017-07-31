@@ -11,6 +11,15 @@ class Server
 {
 
   /**
+   * Default protocol to use when if could not be detected
+   *
+   * @var string
+   */
+  public static $DEFAULT_PROTOCOL = 'https';
+
+
+
+  /**
    * Is request over HTTPS?
    *
    * @return boolean
@@ -44,7 +53,7 @@ class Server
     // If PHP script is not running from webserver return https as default
     if( !isset( $_SERVER[ 'HTTP_HOST' ] ) )
     {
-      return 'https://';
+      return self::$DEFAULT_PROTOCOL . '://';
     }
 
     return self::is_https() ? 'https://' : 'http://';
