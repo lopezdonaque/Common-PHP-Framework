@@ -53,7 +53,7 @@ class TimestampDateType extends \Doctrine\DBAL\Types\DateType
    */
   public function convertToDatabaseValue( $value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform )
   {
-    if( $value )
+    if( is_numeric( $value ) )
     {
       if( ( $value = \DateTime::createFromFormat( 'U', $value ) ) === false )
       {

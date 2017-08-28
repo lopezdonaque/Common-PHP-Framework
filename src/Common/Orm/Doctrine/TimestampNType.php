@@ -57,7 +57,7 @@ class TimestampNType extends \Doctrine\DBAL\Types\DateTimeType
    */
   public function convertToDatabaseValue( $value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform )
   {
-    if( !$value )
+    if( $value == null )
     {
       return null;
     }
