@@ -16,7 +16,7 @@ class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
    *
    * @var array
    */
-  private $_options = array();
+  private $_options = [];
 
 
 
@@ -25,7 +25,7 @@ class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
    *
    * @param array $options
    */
-  public function __construct( $options = array() )
+  public function __construct( $options = [] )
   {
     $this->_options = $options;
     parent::__construct();
@@ -55,7 +55,7 @@ class HtmlTableFormatter extends \Monolog\Formatter\NormalizerFormatter
    */
   public function formatBatch( array $records )
   {
-    return implode( '<br><br>', array_map( array( $this, 'format' ), $records ) );
+    return implode( '<br><br>', array_map( [ $this, 'format' ], $records ) );
   }
 
 }

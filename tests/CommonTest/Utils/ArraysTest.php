@@ -14,8 +14,8 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
    */
   public function test_utf8_decode_array()
   {
-    $outarray = array( iconv( 'UTF-8', 'ISO-8859-1', 'àçÖ' ) );
-    $inarray = array( 'àçÖ' );
+    $outarray = [ iconv( 'UTF-8', 'ISO-8859-1', 'àçÖ' ) ];
+    $inarray = [ 'àçÖ' ];
     \Common\Utils\Arrays::utf8_decode_array( $inarray );
     $this->assertEquals( $inarray, $outarray );
   }
@@ -27,8 +27,8 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
    */
   public function test_utf8_encode_array()
   {
-    $inarray = array( iconv( 'UTF-8', 'ISO-8859-1', 'àçÖ' ) );
-    $outarray = array( 'àçÖ' );
+    $inarray = [ iconv( 'UTF-8', 'ISO-8859-1', 'àçÖ' ) ];
+    $outarray = [ 'àçÖ' ];
     \Common\Utils\Arrays::utf8_encode_array( $inarray );
     $this->assertEquals( $inarray, $outarray );
   }
@@ -41,9 +41,9 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
   public function test_is_associative()
   {
     $this->assertFalse( \Common\Utils\Arrays::is_associative( null ) );
-    $this->assertFalse( \Common\Utils\Arrays::is_associative( array() ) );
-    $this->assertTrue( \Common\Utils\Arrays::is_associative( array( 'a' => 1 ) ) );
-    $this->assertFalse( \Common\Utils\Arrays::is_associative( array( 1, 2, 3 ) ) );
+    $this->assertFalse( \Common\Utils\Arrays::is_associative( [] ) );
+    $this->assertTrue( \Common\Utils\Arrays::is_associative( [ 'a' => 1 ] ) );
+    $this->assertFalse( \Common\Utils\Arrays::is_associative( [ 1, 2, 3 ] ) );
   }
 
 
@@ -53,9 +53,9 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
    */
   public function testArray_key_multi_sort()
   {
-    $empty = array();
-    $oneelment = array( 'k' => 'a' );
-    $several = array( 'a' => 'a', 'c' => 'c', 'b' => 'b' );
+    $empty = [];
+    $oneelment = [ 'k' => 'a' ];
+    $several = [ 'a' => 'a', 'c' => 'c', 'b' => 'b' ];
     \Common\Utils\Arrays::array_key_multi_sort( $empty, 'k' );
     $this->assertEquals( 0, count( $empty ) );
 
@@ -64,7 +64,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
 
     \Common\Utils\Arrays::array_key_multi_sort( $several, 'k' );
     $this->assertEquals( 3, count( $several ) );
-    $this->assertEquals( array( 'a' => 'a', 'b' => 'b', 'c' => 'c' ), $several );
+    $this->assertEquals( [ 'a' => 'a', 'b' => 'b', 'c' => 'c' ], $several );
   }
 
 
@@ -74,7 +74,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
    */
   public function testArray_element_multi_sort()
   {
-    $empty = array();
+    $empty = [];
     \Common\Utils\Arrays::array_element_multi_sort( $empty, 'k' );
     $this->assertEquals( 0, count( $empty ) );
 
@@ -87,7 +87,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
     $elc = new \stdClass();
     $elc->value = 'c';
 
-    $several = array( $ela, $elc, $elb );
+    $several = [ $ela, $elc, $elb ];
 
     $ela2 = new \stdClass();
     $ela2->value = 'a';
@@ -98,7 +98,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
     $elc2 = new \stdClass();
     $elc2->value = 'c';
 
-    $expected = array( $ela2, $elb2, $elc2 );
+    $expected = [ $ela2, $elb2, $elc2 ];
 
     \Common\Utils\Arrays::array_element_multi_sort( $several, 'value' );
     $this->assertEquals( 3, count( $several ) );
@@ -116,7 +116,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
     $elc = new \stdClass();
     $elc->value = 2;
 
-    $several = array( $ela, $elc, $elb );
+    $several = [ $ela, $elc, $elb ];
 
     $ela2 = new \stdClass();
     $ela2->value = 0;
@@ -127,7 +127,7 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
     $elc2 = new \stdClass();
     $elc2->value = 2;
 
-    $expected = array( $ela2, $elb2, $elc2 );
+    $expected = [ $ela2, $elb2, $elc2 ];
 
     \Common\Utils\Arrays::array_element_multi_sort( $several, 'value' );
     $this->assertEquals( 3, count( $several ) );
@@ -143,14 +143,14 @@ class ArraysTest extends \PHPUnit_Framework_TestCase
    */
   public function test_array_map_assoc()
   {
-    $original = array( 'one' => 1, 'two' => 2, 'three' => 3 );
-    $result_toupper = array( 'ONE' => 1, 'TWO' => 2, 'THREE' => 3 );
-    $result_toupper_plusone = array( 'ONE' => 2, 'TWO'   => 3, 'THREE' => 4 );
+    $original = [ 'one' => 1, 'two' => 2, 'three' => 3 ];
+    $result_toupper = [ 'ONE' => 1, 'TWO' => 2, 'THREE' => 3 ];
+    $result_toupper_plusone = [ 'ONE' => 2, 'TWO' => 3, 'THREE' => 4 ];
 
-    $toupper = \Common\Utils\Arrays::array_map_assoc( $original, function( $k, $v ){ return array( strtoupper( $k ), $v ); } );
+    $toupper = \Common\Utils\Arrays::array_map_assoc( $original, function( $k, $v ){ return [ strtoupper( $k ), $v ]; } );
     $this->assertEquals( $result_toupper, $toupper, "Failed mapping keys to uppercase" );
 
-    $toupper_plusone = \Common\Utils\Arrays::array_map_assoc( $original, function( $k, $v ){ return array( strtoupper( $k ), $v + 1 ); } );
+    $toupper_plusone = \Common\Utils\Arrays::array_map_assoc( $original, function( $k, $v ){ return [ strtoupper( $k ), $v + 1 ]; } );
     $this->assertEquals( $result_toupper_plusone, $toupper_plusone, "Failed mapping keys to uppercase and values+1" );
   }
 

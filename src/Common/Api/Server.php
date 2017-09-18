@@ -231,7 +231,7 @@ class Server
   {
     if( $this->_classname_formatter )
     {
-      $api_name = call_user_func_array( $this->_classname_formatter, array( $this->_entity ) );
+      $api_name = call_user_func_array( $this->_classname_formatter, [ $this->_entity ] );
     }
     else
     {
@@ -257,7 +257,7 @@ class Server
         $this->response( new Exception( "Method [$this->_method] of API [{$this->_entity}] not found", ExceptionCodes::CALL_METHOD_NOT_FOUND ) );
       }
 
-      $result = call_user_func_array( array( $api, $this->_method ), $args );
+      $result = call_user_func_array( [ $api, $this->_method ], $args );
       $this->response( $result );
     }
     catch( \Exception $e )

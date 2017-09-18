@@ -22,7 +22,7 @@ class Compressor
    */
   public static function to_one_line( $contents )
   {
-    $contents = str_replace( array( "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ), '', $contents );
+    $contents = str_replace( [ "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ], '', $contents );
     return $contents;
   }
 

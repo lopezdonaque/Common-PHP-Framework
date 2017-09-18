@@ -45,12 +45,12 @@ class ClassMapAutoloaderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_build_classmap()
   {
-    $paths = array
-    (
+    $paths =
+    [
       $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . '/classmap/dir1',
       $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . '/classmap/dir2',
       $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . '/classmap/dir_namespace'
-    );
+    ];
 
     $loader = new \Common\Loader\ClassMapAutoloader( $this->_classmap_file, $paths );
     $loader->build_classmap();

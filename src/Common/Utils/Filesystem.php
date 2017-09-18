@@ -16,7 +16,7 @@ class Filesystem
    * @static
    * @var array $filefind_cache
    */
-  private static $_filefind_cache = array();
+  private static $_filefind_cache = [];
 
 
 
@@ -45,7 +45,7 @@ class Filesystem
     }
     else
     {
-      self::$_filefind_cache[$top] = array();
+      self::$_filefind_cache[$top] = [];
     }
 
     if( ( $handle = opendir( $basedirectory ) ) === false )

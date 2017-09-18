@@ -14,11 +14,11 @@ class XmlTest extends \PHPUnit_Framework_TestCase
    */
   public function test_get_xml_from_mixed_array()
   {
-    $array = array
-    (
+    $array =
+    [
       'item1' => 'foo1',
       'item2' => 'foo2'
-    );
+    ];
 
     $expected_xml = <<<XML
       <root>

@@ -116,7 +116,7 @@ class Ftp
       throw new \Exception( 'Unable to get file list from dir:' . $dir );
     }
 
-    $files_contents = array();
+    $files_contents = [];
 
     // For each file name check against pattern
     foreach( $dir_files_list as $dir_file )

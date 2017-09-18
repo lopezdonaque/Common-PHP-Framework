@@ -25,7 +25,7 @@ class Request
    *
    * @var string[string]|array
    */
-  public $headers = array();
+  public $headers = [];
 
 
   /**
@@ -34,7 +34,7 @@ class Request
    *
    * @var string[string]
    */
-  public $parameters = array();
+  public $parameters = [];
 
 
   /**

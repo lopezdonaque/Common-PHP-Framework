@@ -47,7 +47,7 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
    *
    * @var array
    */
-  protected $headers = array();
+  protected $headers = [];
 
 
   /**
@@ -55,7 +55,7 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
    *
    * @var array
    */
-  protected $attachments_config = array();
+  protected $attachments_config = [];
 
 
 
@@ -69,10 +69,10 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
    * @param integer      $level          The minimum logging level at which this handler will be triggered
    * @param array        $attachments_config
    */
-  public function __construct( $to, $subject, $from, $reply_to, $level = \Monolog\Logger::ERROR, $attachments_config = array( 'contents', 'record' ) )
+  public function __construct( $to, $subject, $from, $reply_to, $level = \Monolog\Logger::ERROR, $attachments_config = [ 'contents', 'record' ] )
   {
     parent::__construct( $level, true );
-    $this->to = is_array( $to ) ? $to : array( $to );
+    $this->to = is_array( $to ) ? $to : [ $to ];
     $this->subject = $subject;
     $this->from = $from;
     $this->reply_to = $reply_to;
@@ -109,7 +109,7 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
   {
     foreach( $records as $record )
     {
-      $attachments = array();
+      $attachments = [];
       $uid = @$record[ 'extra' ][ 'uid' ] ?: microtime();
       $date = $record[ 'datetime' ]->format( 'YmdHis' );
 
@@ -118,25 +118,25 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
         switch( $attachment_config )
         {
           case 'contents':
-            $attachments[] = array
-            (
+            $attachments[] =
+            [
               'filename' => "log_html_{$uid}_{$date}.html",
               'contents' => $content
-            );
+            ];
             break;
 
           case 'record':
-            $attachments[] = array
-            (
+            $attachments[] =
+            [
               'filename' => "log_json_{$uid}_{$date}.json",
               'contents' => @json_encode( $record )
-            );
+            ];
             break;
         }
       }
 
-      \Common\Utils\Mail::send( array
-      (
+      \Common\Utils\Mail::send(
+      [
         'from' => $this->from,
         'to' => $this->to,
         'subject' => $this->subject,
@@ -144,7 +144,7 @@ class ZendMailerHandler extends \Monolog\Handler\MailHandler
         'headers' => $this->headers,
         'reply_to' => $this->reply_to,
         'attachments' => $attachments
-      ));
+      ]);
     }
   }
 

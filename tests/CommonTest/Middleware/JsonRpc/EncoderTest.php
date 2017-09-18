@@ -36,7 +36,7 @@ class EncoderTest extends \PHPUnit_Framework_TestCase
     $expectedresponse = new \stdClass();
     $expectedresponse->foo = 1;
     $expectedresponse->bar = 2;
-    $expectedresponse->quux = array( 1, 2, 3, 4, 5 );
+    $expectedresponse->quux = [ 1, 2, 3, 4, 5 ];
 
     $request = new \Common\Middleware\Request();
     $request->httpRequest = new \Common\Middleware\Http\Request();
@@ -65,7 +65,7 @@ class EncoderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_wrong_request()
   {
-    $body = json_encode( array( 'foo'=> 'bar' ) );
+    $body = json_encode( [ 'foo' => 'bar' ] );
 
     $request = new \Common\Middleware\Request();
     $request->httpRequest = new \Common\Middleware\Http\Request();

@@ -26,7 +26,7 @@ class Cors implements \Common\Middleware\Listener
    *
    * @param array|\Common\Middleware\Http\CorsOptions $options
    */
-  public function __construct( $options = array() )
+  public function __construct( $options = [] )
   {
     $this->_options = is_array( $options ) ? new CorsOptions( $options ) : $options;
   }

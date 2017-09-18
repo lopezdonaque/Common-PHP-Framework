@@ -102,7 +102,7 @@ class ListingNativeSql extends Listing
    */
   private function _get_filters_expression( $filters )
   {
-    $conditions = array();
+    $conditions = [];
 
     foreach( $filters as $filter )
     {
@@ -123,7 +123,7 @@ class ListingNativeSql extends Listing
    */
   private function _get_search_filters_expression( $filters )
   {
-    $conditions = array();
+    $conditions = [];
 
     foreach( $filters[ 0 ]->filters as $filter )
     {
@@ -220,8 +220,8 @@ class ListingNativeSql extends Listing
    */
   public static function convert_to_db_format( $str )
   {
-    $search  = array( "\\", "'" );
-    $replace = array( "\\\\", "\'" );
+    $search  = [ "\\", "'" ];
+    $replace = [ "\\\\", "\'" ];
     return str_replace( $search, $replace, $str );
   }
 

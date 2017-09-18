@@ -72,7 +72,7 @@ class Executor implements \Common\Middleware\Listener
       $object = $this->_handler;
     }
 
-    if( !$object || !is_callable( array( $object, $method ) ) )
+    if( !$object || !is_callable( [ $object, $method ] ) )
     {
       $response->jsonRpcResponse->result = null;
       $response->jsonRpcResponse->error = new \Common\JsonRpc\Error();
@@ -86,7 +86,7 @@ class Executor implements \Common\Middleware\Listener
 
     try
     {
-      $response->jsonRpcResponse->result = call_user_func_array( array( $object, $method ), $args );
+      $response->jsonRpcResponse->result = call_user_func_array( [ $object, $method ], $args );
     }
     catch( \Exception $e )
     {

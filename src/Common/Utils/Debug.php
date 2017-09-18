@@ -20,8 +20,8 @@ class Debug
    */
   public static function error_level_tostring( $intval, $separator = null )
   {
-    $errorlevels = array
-    (
+    $errorlevels =
+    [
       2047 => 'E_ALL',
       2048 => 'E_STRICT',
       1024 => 'E_USER_NOTICE',
@@ -35,7 +35,7 @@ class Debug
       4 => 'E_PARSE',
       2 => 'E_WARNING',
       1 => 'E_ERROR'
-    );
+    ];
 
     $result = '';
 
@@ -60,14 +60,14 @@ class Debug
    */
   public static function exception_to_array( \Exception $e )
   {
-    return array
-    (
+    return
+    [
       'Message' => $e->getMessage(),
       'Code' => $e->getCode(),
       'File' => $e->getFile(),
       'Line' => $e->getLine(),
       'Trace' => explode( '#', $e->getTraceAsString() ) // Used "getTraceAsString" instead of "getTrace" to ignore "arguments"
-    );
+    ];
   }
 
 
@@ -79,16 +79,16 @@ class Debug
    */
   public static function get_global_variables()
   {
-    return array
-    (
+    return
+    [
       'php://input' => file_get_contents( 'php://input' ),
       '$_GET' => $_GET,
       '$_POST' => $_POST,
       '$_COOKIE' => $_COOKIE,
       '$_FILES' => $_FILES,
-      '$_SESSION' => isset( $_SESSION ) ? $_SESSION : array(),
+      '$_SESSION' => isset( $_SESSION ) ? $_SESSION : [],
       '$_SERVER' => $_SERVER
-    );
+    ];
   }
 
 

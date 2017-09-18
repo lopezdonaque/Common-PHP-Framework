@@ -56,7 +56,7 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_method_not_found()
   {
-    $body = json_encode( array( 'foo'=> 'bar' ) );
+    $body = json_encode( [ 'foo' => 'bar' ] );
 
     $request = new \Common\Middleware\Request();
     $request->httpRequest = new \Common\Middleware\Http\Request();
@@ -80,11 +80,11 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_jsonrpc_10_request()
   {
-    $body = json_encode( array
-    (
+    $body = json_encode(
+      [
       'id'     => 1,
       'method' => 'foo',
-      'params' => array( 'bar' ) )
+      'params' => [ 'bar' ] ]
     );
 
     $request = new \Common\Middleware\Request();
@@ -100,7 +100,7 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals( '1.0', $request->jsonRpcRequest->jsonrpc );
     $this->assertEquals( 1, $request->jsonRpcRequest->id );
     $this->assertEquals( 'foo', $request->jsonRpcRequest->method );
-    $this->assertEquals( array( 'bar' ), $request->jsonRpcRequest->params );
+    $this->assertEquals( [ 'bar' ], $request->jsonRpcRequest->params );
   }
 
 
@@ -110,12 +110,12 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_jsonrpc_20_request()
   {
-    $body = json_encode( array
-    (
+    $body = json_encode(
+      [
       'jsonrpc'=> '2.0',
       'id'     => 1,
       'method' => 'foo',
-      'params' => array( 'bar' ) )
+      'params' => [ 'bar' ] ]
     );
 
     $request = new \Common\Middleware\Request();
@@ -131,7 +131,7 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals( '2.0', $request->jsonRpcRequest->jsonrpc );
     $this->assertEquals( 1, $request->jsonRpcRequest->id );
     $this->assertEquals( 'foo', $request->jsonRpcRequest->method );
-    $this->assertEquals( array( 'bar' ), $request->jsonRpcRequest->params );
+    $this->assertEquals( [ 'bar' ], $request->jsonRpcRequest->params );
   }
 
 
@@ -141,11 +141,11 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
    */
   public function test_jsonrpc_20_notification()
   {
-    $body = json_encode( array
-    (
+    $body = json_encode(
+      [
       'jsonrpc'=> '2.0',
       'method' => 'foo',
-      'params' => array( 'bar' ) )
+      'params' => [ 'bar' ] ]
     );
 
     $request = new \Common\Middleware\Request();
@@ -161,7 +161,7 @@ class DecoderTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals( '2.0', $request->jsonRpcRequest->jsonrpc );
     $this->assertEquals( null, $request->jsonRpcRequest->id );
     $this->assertEquals( 'foo', $request->jsonRpcRequest->method );
-    $this->assertEquals( array( 'bar' ), $request->jsonRpcRequest->params );
+    $this->assertEquals( [ 'bar' ], $request->jsonRpcRequest->params );
     $this->assertTrue( $request->jsonRpcRequest->is_notification() );
   }
 

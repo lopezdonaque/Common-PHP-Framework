@@ -44,7 +44,7 @@ class ApiToClassNameFinder implements \Common\Middleware\Listener
       return;
     }
 
-    $request->api_class_name = call_user_func_array( $this->_formatter, array( $request->api_entity ) );
+    $request->api_class_name = call_user_func_array( $this->_formatter, [ $request->api_entity ] );
   }
 
 

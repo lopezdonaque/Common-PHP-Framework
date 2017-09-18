@@ -44,7 +44,7 @@ class JsonRpcParser implements \Common\Middleware\Listener
     }
 
     // Mandatory JSON encoded parameters
-    foreach( array( 'entity', 'method', 'arguments' ) as $param )
+    foreach( [ 'entity', 'method', 'arguments' ] as $param )
     {
       if( !isset( $request->httpRequest->parameters[ $param ] ) )
       {
@@ -84,7 +84,7 @@ class JsonRpcParser implements \Common\Middleware\Listener
     }
 
     // Optional parameters
-    foreach( array( 'token', 'callback', 'return_format', 'transaction_id', 'transport' ) as $param )
+    foreach( [ 'token', 'callback', 'return_format', 'transaction_id', 'transport' ] as $param )
     {
       if( isset( $request->httpRequest->parameters[ $param ] ) )
       {

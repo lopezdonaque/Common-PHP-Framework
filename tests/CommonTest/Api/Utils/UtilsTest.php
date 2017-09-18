@@ -16,15 +16,15 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 
     if( !is_array( $_FILES ) )
     {
-      $_FILES = array();
+      $_FILES = [];
     }
 
-    $_FILES[ 'formfield' ] = array
-    (
+    $_FILES[ 'formfield' ] =
+    [
       'error' => 0,
       'tmp_name' => __FILE__,
       'name' => basename( __FILE__ )
-    );
+    ];
   }
 
 

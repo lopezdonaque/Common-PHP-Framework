@@ -86,7 +86,7 @@ class Decoder implements \Common\Middleware\Listener
    */
   protected function parse_jsonrpc_request( &$request )
   {
-    if( in_array( $request->get_header( 'Content-type', false ), array( 'application/json', 'text/plain' ) ) && $request->get_header( 'Content-length' ) > 0 )
+    if( in_array( $request->get_header( 'Content-type', false ), [ 'application/json', 'text/plain' ] ) && $request->get_header( 'Content-length' ) > 0 )
     {
       $decoded = @json_decode( $request->body );
 
@@ -141,7 +141,7 @@ class Decoder implements \Common\Middleware\Listener
     $jsonrequest->jsonrpc = ( isset( $decoded->jsonrpc ) ) ? $decoded->jsonrpc : '1.0';
     $jsonrequest->id = ( isset( $decoded->id ) ) ? $decoded->id : null;
     $jsonrequest->method = $decoded->method;
-    $jsonrequest->params = ( isset( $decoded->params ) ) ? $decoded->params : array();
+    $jsonrequest->params = ( isset( $decoded->params ) ) ? $decoded->params : [];
 
     foreach( $decoded as $id => $value )
     {

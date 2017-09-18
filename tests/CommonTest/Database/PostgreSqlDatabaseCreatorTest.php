@@ -45,21 +45,21 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
    */
   public function test_exec()
   {
-    $options = array
-    (
+    $options =
+    [
       'user' => 'root',
       'dbname' => $this->_dbname,
-      'procedural_languages' => array( 'plpgsql' ),
-      'sql_scripts' => array
-      (
+      'procedural_languages' => [ 'plpgsql' ],
+      'sql_scripts' =>
+      [
         $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'database.sql'
-      ),
-      'fixtures' => array
-      (
+      ],
+      'fixtures' =>
+      [
         $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'fixtures.sql',
         $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'fixtures.json'
-      )
-    );
+      ]
+    ];
 
     $dc = new \Common\Database\PostgreSqlDatabaseCreator( $options );
     $dc->exec();
@@ -75,15 +75,15 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
    */
   public function test_invalid_sql_script()
   {
-    $options = array
-    (
+    $options =
+    [
       'user' => 'root',
       'dbname' => $this->_dbname,
-      'sql_scripts' => array
-      (
+      'sql_scripts' =>
+      [
         $GLOBALS[ '__COMMON_RESOURCES_PATH' ] . DIRECTORY_SEPARATOR . 'database_fail.sql'
-      )
-    );
+      ]
+    ];
 
     $this->setExpectedException( '\Common\Database\PostgreSqlDatabaseCreatorException', null );
     $dc = new \Common\Database\PostgreSqlDatabaseCreator( $options );

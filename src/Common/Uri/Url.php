@@ -46,13 +46,13 @@ class Url extends Uri
    *
    * @var string[]
    */
-  protected static $accepted_schemes = array
-  (
+  protected static $accepted_schemes =
+  [
     self::SCHEME_HTTP,
     self::SCHEME_HTTPS,
     self::SCHEME_FTP,
     self::SCHEME_SFTP
-  );
+  ];
 
 
   /**
@@ -422,7 +422,7 @@ class Url extends Uri
       return '';
     }
 
-    $parms = array();
+    $parms = [];
 
     foreach( $params as $id => $value )
     {
@@ -442,7 +442,7 @@ class Url extends Uri
    */
   public function get_string_as_parameters( $query )
   {
-    $params = array();
+    $params = [];
     $items = explode( '&', $query );
 
     foreach( $items as $item )

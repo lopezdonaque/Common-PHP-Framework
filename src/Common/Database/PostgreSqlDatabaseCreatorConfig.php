@@ -79,7 +79,7 @@ class PostgreSqlDatabaseCreatorConfig
    *
    * @var array
    */
-  public $sql_scripts = array();
+  public $sql_scripts = [];
 
 
   /**
@@ -89,7 +89,7 @@ class PostgreSqlDatabaseCreatorConfig
    *
    * @var array
    */
-  public $procedural_languages = array();
+  public $procedural_languages = [];
 
 
   /**
@@ -97,7 +97,7 @@ class PostgreSqlDatabaseCreatorConfig
    *
    * @var array
    */
-  public $fixtures = array();
+  public $fixtures = [];
 
 
   /**
@@ -122,7 +122,7 @@ class PostgreSqlDatabaseCreatorConfig
    *
    * @param array $config
    */
-  public function __construct( $config = array() )
+  public function __construct( $config = [] )
   {
     foreach( $config as $key => $value )
     {

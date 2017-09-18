@@ -173,7 +173,7 @@ class Mail
 
     if( !isset( $options[ 'attachments' ] ) )
     {
-      $options[ 'attachments' ] = array();
+      $options[ 'attachments' ] = [];
     }
   }
 

@@ -17,7 +17,7 @@ class Observable
    *
    * @var array
    */
-  private $_listeners = array();
+  private $_listeners = [];
 
 
 
@@ -31,7 +31,7 @@ class Observable
   {
     if( !isset( $this->_listeners[ $event ] ) )
     {
-      $this->_listeners[ $event ] = array();
+      $this->_listeners[ $event ] = [];
     }
 
     $this->_listeners[ $event ][] = $callback;
@@ -53,7 +53,7 @@ class Observable
       {
         if( is_callable( $listener ) )
         {
-          call_user_func_array( $listener, array( $data ) );
+          call_user_func_array( $listener, [ $data ] );
         }
         else
         {
@@ -64,7 +64,7 @@ class Observable
             if( is_string( $objectname ) && is_string( $method ) )
             {
               $obj = new $objectname();
-              call_user_func_array( array( $obj, $method ), array( $data ) );
+              call_user_func_array( [ $obj, $method ], [ $data ] );
             }
           }
         }

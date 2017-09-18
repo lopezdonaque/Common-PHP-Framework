@@ -55,7 +55,7 @@ class Request extends \Common\Middleware\Request
    *
    * @var mixed[]
    */
-  public $api_arguments = array();
+  public $api_arguments = [];
 
 
   /**

@@ -64,8 +64,8 @@ class StringTest extends \PHPUnit_Framework_TestCase
    */
   public function test_replace_variables()
   {
-    $this->assertEquals( 'Mary had a little lamb', \Common\Utils\Strings::replace_variables( 'Mary had a little lamb', array() ) );
-    $this->assertEquals( 'Mary had a bloody chainsaw', \Common\Utils\Strings::replace_variables( 'Mary had a little lamb', array( 'little' => 'bloody', 'lamb' => 'chainsaw' ) ) );
+    $this->assertEquals( 'Mary had a little lamb', \Common\Utils\Strings::replace_variables( 'Mary had a little lamb', [] ) );
+    $this->assertEquals( 'Mary had a bloody chainsaw', \Common\Utils\Strings::replace_variables( 'Mary had a little lamb', [ 'little' => 'bloody', 'lamb' => 'chainsaw' ] ) );
   }
 
 
@@ -112,9 +112,9 @@ class StringTest extends \PHPUnit_Framework_TestCase
    */
   public function test_parse_template()
   {
-    $this->assertEquals( '{test}', \Common\Utils\Strings::parse_template( '{test}', array() ) );
-    $this->assertEquals( 'foo', \Common\Utils\Strings::parse_template( '{test}', array( 'test' => 'foo' ) ) );
-    $this->assertEquals( 'This foo is a bar', \Common\Utils\Strings::parse_template( 'This {thing} is a {test}', array( 'thing' => 'foo', 'test' => 'bar' ) ) );
+    $this->assertEquals( '{test}', \Common\Utils\Strings::parse_template( '{test}', [] ) );
+    $this->assertEquals( 'foo', \Common\Utils\Strings::parse_template( '{test}', [ 'test' => 'foo' ] ) );
+    $this->assertEquals( 'This foo is a bar', \Common\Utils\Strings::parse_template( 'This {thing} is a {test}', [ 'thing' => 'foo', 'test' => 'bar' ] ) );
   }
 
 }

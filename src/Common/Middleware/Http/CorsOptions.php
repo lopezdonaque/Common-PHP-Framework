@@ -24,7 +24,7 @@ class CorsOptions
    *
    * @var string[]
    */
-  public $methods = array( 'GET', 'POST', 'OPTIONS' );
+  public $methods = [ 'GET', 'POST', 'OPTIONS' ];
 
 
   /**
@@ -57,7 +57,7 @@ class CorsOptions
    *
    * @param array $options
    */
-  public function __construct( $options = array() )
+  public function __construct( $options = [] )
   {
     foreach( $options as $option => $value )
     {

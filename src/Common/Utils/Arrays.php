@@ -252,7 +252,7 @@ class Arrays
    */
   public static function join_sprintf( $array, $template, $separator = '' )
   {
-    $result = array();
+    $result = [];
 
     foreach( $array as $key => $value )
     {
@@ -403,7 +403,7 @@ class Arrays
   public static function indexed_to_associative( $array, $element )
   {
     $indexed_array = $array;
-    $associative_array = array();
+    $associative_array = [];
 
     for( $i = 0; $i < count( $indexed_array ); $i++ )
     {
@@ -435,7 +435,7 @@ class Arrays
    */
   public static function array_filter_assoc( $array, $callback )
   {
-    $res = array();
+    $res = [];
 
     foreach( $array as $k => $v )
     {
@@ -486,7 +486,7 @@ class Arrays
    */
   public static function convert_to_arguments( $array_args )
   {
-    $object_args = array();
+    $object_args = [];
 
     foreach( $array_args as $arg )
     {
@@ -561,7 +561,7 @@ class Arrays
    *    [key2] => lemon
    *  )
    */
-  public static function replace_values( $array, $search_values = array() )
+  public static function replace_values( $array, $search_values = [] )
   {
     // Search in all array element
     foreach( $array as $key => &$value )
@@ -618,7 +618,7 @@ class Arrays
    */
   public static function array_map_assoc( $array, $callback )
   {
-    $res = array();
+    $res = [];
 
     foreach( $array as $oldkey => $oldvalue )
     {

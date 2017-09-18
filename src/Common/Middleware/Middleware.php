@@ -41,7 +41,7 @@ class Middleware
    *
    * @param \Common\Middleware\Listener[] listeners in order of execution.
    */
-  public function __construct( $listeners = array() )
+  public function __construct( $listeners = [] )
   {
     $this->_line = $listeners;
   }
@@ -68,7 +68,7 @@ class Middleware
    */
   public function insert_before( Listener $listener, $before )
   {
-    $res = array();
+    $res = [];
 
     if( is_string( $before ) )
     {
@@ -117,7 +117,7 @@ class Middleware
    */
   public function insert_after( \Common\Middleware\Listener $listener, $after )
   {
-    $res = array();
+    $res = [];
     $is_the_same = $this->get_comparer( $after ); /* @var $is_the_same \Closure */
     $inserted = false;
 
@@ -181,7 +181,7 @@ class Middleware
    */
   public function swap( $target, Listener $replacement )
   {
-    $res = array();
+    $res = [];
     $is_the_same = $this->get_comparer( $target ); /* @var $is_the_same \Closure */
     $replaced = false;
 
@@ -223,7 +223,7 @@ class Middleware
       $response = new Response();
     }
 
-    $called = array();
+    $called = [];
 
     foreach( $this->_line as $listener )
     {

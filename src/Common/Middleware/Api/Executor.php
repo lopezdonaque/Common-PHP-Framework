@@ -29,7 +29,7 @@ class Executor implements \Common\Middleware\Listener
     try
     {
       $api_instance = $response->api_instance = new $api_name();
-      $response->api_return_value = call_user_func_array( array( $api_instance, $request->api_method ), $request->api_arguments );
+      $response->api_return_value = call_user_func_array( [ $api_instance, $request->api_method ], $request->api_arguments );
     }
     catch( \Common\Api\Exception $e ) // Capture controlled Api exceptions
     {

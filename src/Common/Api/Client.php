@@ -140,7 +140,7 @@ class Client
    * @param array $arguments
    * @param array $files
    */
-  public function __construct( $entity, $method, $arguments = array(), $files = array() )
+  public function __construct( $entity, $method, $arguments = [], $files = [] )
   {
     $this->transaction_id = uniqid( $entity . $method . ':' );
     $this->entity = $entity;
@@ -188,7 +188,7 @@ class Client
 
     if( isset( $_SERVER[ 'REMOTE_ADDR' ] ) )
     {
-      curl_setopt( $curl_resource, CURLOPT_HTTPHEADER, array( 'X-Forwarded-For:' . $_SERVER[ 'REMOTE_ADDR' ] ) );
+      curl_setopt( $curl_resource, CURLOPT_HTTPHEADER, [ 'X-Forwarded-For:' . $_SERVER[ 'REMOTE_ADDR' ] ] );
     }
 
     if( $this->customer_data )
@@ -209,7 +209,7 @@ class Client
    */
   private function _get_arguments_for_curl()
   {
-    $arguments = array();
+    $arguments = [];
     $arguments[ 'transaction_id' ] = $this->transaction_id;
     $arguments[ 'entity' ] = $this->entity;
     $arguments[ 'method' ] = $this->method;
@@ -297,13 +297,13 @@ class Client
   {
     if( \Common\Utils\Cookies::get( 'start_xdebug_forward' ) && \Common\Utils\Cookies::get( '_XDEBUG_SESSION' ) )
     {
-      $debug_params = array( 'XDEBUG_SESSION_START' => \Common\Utils\Cookies::get( '_XDEBUG_SESSION' ) );
+      $debug_params = [ 'XDEBUG_SESSION_START' => \Common\Utils\Cookies::get( '_XDEBUG_SESSION' ) ];
       return $url . '?' . http_build_query( $debug_params );
     }
 
     if( \Common\Utils\Cookies::get( 'start_debug_forward' ) )
     {
-      $debug_params = array_flip( array( 'debug_fastfile', 'debug_host', 'use_remote', 'debug_port', 'debug_stop', 'original_url', 'debug_start_session', 'debug_session_id', 'send_debug_header', 'send_sess_end', 'debug_jit' ) );
+      $debug_params = array_flip( [ 'debug_fastfile', 'debug_host', 'use_remote', 'debug_port', 'debug_stop', 'original_url', 'debug_start_session', 'debug_session_id', 'send_debug_header', 'send_sess_end', 'debug_jit' ] );
       array_walk( $debug_params, function( &$item, $key ){ $item = \Common\Utils\Cookies::get( $key ); } );
       $debug_params[ 'start_debug' ] = 1;
       return $url . '?' . http_build_query( $debug_params );

@@ -30,7 +30,7 @@ class Response
    *
    * @var string[]
    */
-  public $headers = array();
+  public $headers = [];
 
 
   /**

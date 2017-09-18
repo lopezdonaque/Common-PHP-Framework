@@ -49,7 +49,7 @@ class Decoder implements \Common\Middleware\Listener
     // Fallback
     if( $headers === false )
     {
-      $headers = array();
+      $headers = [];
       foreach( $_SERVER as $name => $value )
       {
         if( substr( $name, 0, 5 ) == 'HTTP_' )
@@ -61,7 +61,7 @@ class Decoder implements \Common\Middleware\Listener
 
     $headers = \Common\Utils\Arrays::array_map_assoc( $headers, function ( $k, $v )
     {
-      return array( strtolower( $k ), $v );
+      return [ strtolower( $k ), $v ];
     });
 
     return $headers;

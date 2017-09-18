@@ -25,7 +25,7 @@ class PostgreSqlDatabaseCreator
    *
    * @param array|PostgreSqlDatabaseCreatorConfig $config
    */
-  public function __construct( $config = array() )
+  public function __construct( $config = [] )
   {
     $this->config = is_array( $config ) ? new PostgreSqlDatabaseCreatorConfig( $config ) : $config;
   }
@@ -370,7 +370,7 @@ class PostgreSqlDatabaseCreator
   private function _execute_update_query_from_array( $pdo, $update )
   {
     $table = $update->table;
-    $columns_sql = array();
+    $columns_sql = [];
 
     foreach( $update->columns as $column => $value )
     {

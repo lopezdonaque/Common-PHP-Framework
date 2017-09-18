@@ -28,12 +28,12 @@ class Gravatar
   {
     $url = $secure ? self::GRAVATAR_SECURE_URL : self::GRAVATAR_URL;
 
-    $query_params = http_build_query( array
-    (
+    $query_params = http_build_query(
+    [
       's' => $size,
       'r' => $rating,
       'd' => $default
-    ));
+    ]);
 
     $url .= md5( $email ) . '?' . $query_params;
     return $url;
