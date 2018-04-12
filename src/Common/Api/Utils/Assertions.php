@@ -41,4 +41,31 @@ class Assertions
     self::assert( filter_var( $email, FILTER_VALIDATE_EMAIL ), $message, $code );
   }
 
+
+
+  /**
+   * Check if the parameter is valid
+   *
+   * @param string $name
+   * @param string $type
+   * @param mixed $value
+   */
+  public static function assert_parameter( $name, $type, $value )
+  {
+    switch( $type )
+    {
+      case "int":
+        \Common\Api\Utils\Assertions::assert( is_int( $value ) && $value > 0, "Invalid int parameter {$name}", \api_base_exceptions::GENERAL_INVALID_ARGUMENT );
+        break;
+
+      case "string":
+        \Common\Api\Utils\Assertions::assert( is_string( $value ) && trim( $value ) != "", "Invalid string parameter {$name}", \api_base_exceptions::GENERAL_INVALID_ARGUMENT );
+        break;
+
+      case "object":
+        \Common\Api\Utils\Assertions::assert( is_object( $value ), "Invalid object parameter {$name}", \api_base_exceptions::GENERAL_INVALID_ARGUMENT );
+        break;
+    }
+  }
+
 }
