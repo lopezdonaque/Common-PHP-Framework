@@ -65,6 +65,10 @@ class Assertions
       case "object":
         \Common\Api\Utils\Assertions::assert( is_object( $value ), "Invalid object parameter {$name}", \api_base_exceptions::GENERAL_INVALID_ARGUMENT );
         break;
+
+      case "json":
+        \Common\Api\Utils\Assertions::assert( \Common\Utils\Json::is_json( $value ), "Invalid json parameter {$name}", \api_base_exceptions::GENERAL_INVALID_ARGUMENT );
+        break;
     }
   }
 
