@@ -275,7 +275,7 @@ class PostgreSqlDatabaseCreator
    */
   public function exists_database()
   {
-    $num_ddbb = shell_exec( '/usr/bin/psql -h ' . $this->config->host . ' -l | grep -w ' . $this->config->dbname . ' | wc -l' );
+    $num_ddbb = shell_exec( "/usr/bin/psql -h {$this->config->host} -U {$this->config->user} -l | grep -w {$this->config->dbname} | wc -l" );
     $num_ddbb = (int) trim( $num_ddbb );
     return ( $num_ddbb > 0 );
   }
